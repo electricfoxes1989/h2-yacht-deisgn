@@ -441,7 +441,7 @@ export default function ProjectDetail() {
                     href={`/projects/${rp.slug?.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-xl">
+                    <div className="img-zoom overflow-hidden bg-muted rounded-xl">
                       {rp.mainImage && (
                         <img
                           src={urlFor(rp.mainImage).width(800).quality(85).url()}
@@ -449,17 +449,15 @@ export default function ProjectDetail() {
                           className="w-full h-auto block"
                         />
                       )}
-                      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-[5]" />
-                      <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
-                        {rp.shipyard && (
-                          <span className="label-text text-white/50 mb-2 text-[0.65rem]">
-                            {rp.shipyard}
-                          </span>
-                        )}
-                        <h3 className="heading-serif text-xl md:text-2xl text-white">
-                          {rp.title}
-                        </h3>
-                      </div>
+                    </div>
+                    <div className="project-card-text mt-4">
+                      <div className="accent-line mb-3" />
+                      <h3 className="text-base font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                        {rp.title}
+                      </h3>
+                      {rp.shipyard && (
+                        <p className="text-sm text-h2-muted mt-1">{rp.shipyard}</p>
+                      )}
                     </div>
                   </Link>
                 </FadeInSection>

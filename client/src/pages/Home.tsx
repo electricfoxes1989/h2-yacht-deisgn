@@ -222,7 +222,7 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -233,17 +233,15 @@ export default function Home() {
                         className="w-full h-auto block"
                       />
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
-                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-sm text-white/60 uppercase tracking-widest">
-                          {project.shipyard}
-                        </p>
-                      )}
-                    </div>
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    {project.shipyard && (
+                      <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -279,7 +277,7 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -290,15 +288,15 @@ export default function Home() {
                         className="w-full h-auto block"
                       />
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
-                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-white/60 uppercase tracking-widest">
-                        {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
-                      </p>
-                    </div>
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-h2-muted mt-1">
+                      {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
+                    </p>
                   </div>
                 </Link>
               ))}
@@ -349,7 +347,7 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom relative overflow-hidden bg-white/10 rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -360,17 +358,15 @@ export default function Home() {
                         className="w-full h-auto block"
                       />
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-[5]" />
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8">
-                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-sm text-white/60 uppercase tracking-widest">
-                          {project.shipyard}
-                        </p>
-                      )}
-                    </div>
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-white group-hover:text-white/80 transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    {project.shipyard && (
+                      <p className="text-sm text-white/50 mt-1">{project.shipyard}</p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -408,7 +404,7 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom relative overflow-hidden bg-white/5 rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-white/5 rounded-2xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -419,17 +415,15 @@ export default function Home() {
                         className="w-full h-auto block"
                       />
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-[5]" />
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8">
-                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-sm text-white/60 uppercase tracking-widest">
-                          {project.shipyard}
-                        </p>
-                      )}
-                    </div>
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-white group-hover:text-white/80 transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    {project.shipyard && (
+                      <p className="text-sm text-white/50 mt-1">{project.shipyard}</p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -465,7 +459,7 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -476,17 +470,15 @@ export default function Home() {
                         className="w-full h-auto block"
                       />
                     )}
-                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
-                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-sm text-white/60 uppercase tracking-widest">
-                          {project.shipyard}
-                        </p>
-                      )}
-                    </div>
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    {project.shipyard && (
+                      <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
+                    )}
                   </div>
                 </Link>
               ))}

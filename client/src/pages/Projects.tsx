@@ -109,8 +109,8 @@ export default function Projects() {
                   href={`/projects/${project.slug?.current}`}
                   className="group block"
                 >
-                  {/* Image container with overlay */}
-                  <div className="img-zoom img-overlay bg-h2-light relative overflow-hidden rounded-xl">
+                  {/* Image — clean zoom, no overlay */}
+                  <div className="img-zoom bg-h2-light overflow-hidden rounded-xl">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
@@ -121,22 +121,12 @@ export default function Projects() {
                         className="w-full h-auto block"
                       />
                     )}
-                    {/* Hover text overlay */}
-                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <h3 className="text-white text-2xl md:text-3xl heading-serif mb-2">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-white/70 text-sm tracking-[0.05em] uppercase font-medium">
-                          {project.shipyard}
-                        </p>
-                      )}
-                    </div>
                   </div>
 
                   {/* Info below image */}
-                  <div className="mt-5">
-                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-h2-cyan transition-colors duration-300">
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
                       {project.title}
                     </h3>
                     {project.shipyard && (
