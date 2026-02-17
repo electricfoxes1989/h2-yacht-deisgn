@@ -1,0 +1,23 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest"
+      - "--build-arg"
+      - "VITE_SANITY_PROJECT_ID=${_VITE_SANITY_PROJECT_ID}"
+      - "--build-arg"
+      - "VITE_SANITY_DATASET=${_VITE_SANITY_DATASET}"
+      - "--build-arg"
+      - "VITE_SANITY_API_TOKEN=${_VITE_SANITY_API_TOKEN}"
+      - "."
+images:
+  - "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest"
+substitutions:
+  _REGION: "us-central1"
+  _PROJECT_ID: "robotic-land-466111-h8"
+  _REPOSITORY: "h2-repo"
+  _IMAGE: "h2-manus-web"
+  _VITE_SANITY_PROJECT_ID: "dhren5s2"
+  _VITE_SANITY_DATASET: "production"
+  _VITE_SANITY_API_TOKEN: ""

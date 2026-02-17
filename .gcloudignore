@@ -1,0 +1,17 @@
+# Ignore dependencies and build outputs
+node_modules
+**/node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+
+# Local env
+.env
+.env.*
+
+# OS/IDE
+.DS_Store
+.vscode
+.idea

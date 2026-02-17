@@ -1,0 +1,714 @@
+import { useState, useEffect, useRef } from 'react'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
+import HeroSlideshow from '@/components/HeroSlideshow'
+import { getFeaturedProjects, getAllProjects, getLatestNews, urlFor } from '@/lib/sanity'
+import { Link } from 'wouter'
+import { ArrowRight } from 'lucide-react'
+
+function AnimatedStat({ value, label }: { value: string; label: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [count, setCount] = useState(0)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const numericValue = parseInt(value)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true)
+          const duration = 2000
+          const steps = 60
+          const increment = numericValue / steps
+          let current = 0
+          let step = 0
+          const timer = setInterval(() => {
+            step++
+            current = Math.min(Math.round(increment * step), numericValue)
+            setCount(current)
+            if (step >= steps) clearInterval(timer)
+          }, duration / steps)
+        }
+      },
+      { threshold: 0.3 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [hasAnimated, numericValue])
+
+  return (
+    <div ref={ref} className="py-12 md:py-16 text-center">
+      <span className="heading-serif text-4xl md:text-5xl text-white block mb-3">
+        {count}{value.includes('+') ? '+' : ''}
+      </span>
+      <span className="label-text text-white/50">{label}</span>
+    </div>
+  )
+}
+
+const services = [
+  {
+    number: '01',
+    title: 'New Build',
+    description:
+      'From initial concept to final delivery, we design bespoke superyacht interiors and exteriors. Every project begins with a blank canvas and a conversation \u2014 understanding each owner\u2019s vision, lifestyle and aspirations.',
+  },
+  {
+    number: '02',
+    title: 'Refit',
+    description:
+      'Transforming existing vessels with fresh design concepts, upgraded interiors, and modernised systems. With decades of refit experience, H2 built its reputation as the refit design experts.',
+  },
+  {
+    number: '03',
+    title: 'Hotel & Home',
+    description:
+      'Bringing our yacht design expertise to luxury residential and hospitality projects worldwide, including private residences and boutique hotels.',
+  },
+  {
+    number: '04',
+    title: 'Tenders & Toys',
+    description:
+      'Designing custom tenders and support vessels that complement the mother ship in style and performance, working with leading tender builders.',
+  },
+]
+
+const heroImages = [
+  { id: 'hero-01', src: '/images/hero/hero-01.jpg', title: 'Arrow', subtitle: 'Feadship' },
+  { id: 'hero-06', src: '/images/hero/hero-06.jpg', title: 'Beach Club', subtitle: '' },
+  { id: 'hero-09', src: '/images/hero/hero-09.jpg', title: 'Al Lusail', subtitle: 'L\u00fcrssen' },
+  { id: 'hero-10', src: '/images/hero/hero-10.jpg', title: 'Interior', subtitle: 'Jeff Brown' },
+  { id: 'hero-13', src: '/images/hero/hero-13.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
+  { id: 'hero-14', src: '/images/hero/hero-14.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
+  { id: 'hero-17', src: '/images/hero/hero-17.jpg', title: 'Beach Club', subtitle: '' },
+  { id: 'hero-08', src: '/images/hero/hero-08.jpg', title: 'Design Detail', subtitle: '' },
+]
+
+export default function Home() {
+  const [featuredProjects, setFeaturedProjects] = useState([])
+  const [allProjects, setAllProjects] = useState<any[]>([])
+  const [latestNews, setLatestNews] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([getFeaturedProjects(), getAllProjects(), getLatestNews(3)])
+      .then(([featured, all, news]) => {
+        setFeaturedProjects(featured)
+        setAllProjects(all)
+        setLatestNews(news)
+      })
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="animate-pulse label-text text-h2-muted">Loading...</div>
+      </div>
+    )
+  }
+
+  // Filter projects by category
+  const newBuildProjects = allProjects
+    .filter((p: any) => p.category === 'new-build')
+    .slice(0, 4)
+  const hotelHomeProjects = allProjects
+    .filter((p: any) => p.category === 'hotel-home')
+    .slice(0, 4)
+  const refitProjects = allProjects
+    .filter((p: any) => p.category === 'refit')
+    .slice(0, 4)
+  const inBuildProjects = allProjects
+    .filter((p: any) => p.category === 'in-build')
+    .slice(0, 4)
+  const conceptProjects = allProjects
+    .filter((p: any) => p.category === 'concepts')
+    .slice(0, 4)
+  const tenderProjects = allProjects
+    .filter((p: any) => p.category === 'tenders')
+    .slice(0, 4)
+  const bespokeProjects = [...hotelHomeProjects, ...tenderProjects].slice(0, 4)
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Navigation />
+
+      {/* ── 1. Hero Showcase ── */}
+      <HeroSlideshow
+        slides={[
+          ...featuredProjects,
+          ...heroImages
+            .filter((h) => !featuredProjects.some((fp: any) => fp._id === h.id))
+            .map((h) => ({
+              _id: h.id,
+              title: h.title,
+              slug: { current: '' },
+              shipyard: h.subtitle,
+              imageUrl: h.src,
+            })),
+        ]}
+      />
+
+      {/* ── About Section ── */}
+      <section className="section-padding">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12 items-stretch">
+            {/* Left — Image */}
+            <div className="relative aspect-[4/5] lg:aspect-auto overflow-hidden rounded-2xl lg:rounded-r-none bg-muted">
+              <img
+                src="/images/hero/hero-10.jpg"
+                alt="Superyacht interior by H2 Yacht Design"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Right — Copy */}
+            <div className="flex flex-col justify-center py-12 lg:py-20 lg:pl-12">
+              <span className="label-text inline-block mb-6 text-h2-muted tracking-[0.2em]">
+                Est. 1994
+              </span>
+              <div className="h-px w-16 bg-[var(--h2-cyan)] mb-8" />
+              <div className="space-y-6 text-base leading-[1.8] text-h2-body">
+                <p>
+                  Jonny Horsfield established the H2 design studio in London during 1994. In the early
+                  years of the business they worked almost exclusively on yacht refit projects which gave
+                  them a broad experience of working to strict time frames in different design styles with
+                  varying budgets.
+                </p>
+                <p>
+                  During this period H2 built an enviable reputation amongst the yacht community for being
+                  the refit design experts. Word spread quickly, and before long the studio was being
+                  approached for new-build interior and exterior commissions alike.
+                </p>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group mt-2"
+                >
+                  Learn more about H2
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. Exterior Design ── */}
+      {newBuildProjects.length > 0 && (
+        <section className="section-padding">
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3">Projects</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
+                  Exterior Design
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+              >
+                View all projects
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {newBuildProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-auto block"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
+                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
+                        {project.title}
+                      </h3>
+                      {project.shipyard && (
+                        <p className="text-sm text-white/60 uppercase tracking-widest">
+                          {project.shipyard}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 3. Bespoke Projects (Hotel & Home + Tenders) ── */}
+      {bespokeProjects.length > 0 && (
+        <section className="section-padding bg-h2-cream">
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3">Hotel &amp; Home &middot; Tenders</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
+                  Bespoke Projects
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+              >
+                View all
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {bespokeProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-auto block"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
+                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-white/60 uppercase tracking-widest">
+                        {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Stats Bar ── */}
+      <section className="bg-[var(--h2-navy)]">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            {[
+              { value: '30+', label: 'Years of Excellence' },
+              { value: '200+', label: 'Completed Projects' },
+              { value: '20+', label: 'Multi-Disciplinary Designers' },
+            ].map((stat) => (
+              <AnimatedStat key={stat.label} value={stat.value} label={stat.label} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Refit — Blue brand section ── */}
+      {refitProjects.length > 0 && (
+        <section className="section-padding" style={{ backgroundColor: 'var(--h2-cyan)', color: 'white' }}>
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.7)' }}>Refit</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-white">
+                  Refit
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors group"
+              >
+                View all
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {refitProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom relative overflow-hidden bg-white/10 rounded-2xl">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-auto block"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-[5]" />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8">
+                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
+                        {project.title}
+                      </h3>
+                      {project.shipyard && (
+                        <p className="text-sm text-white/60 uppercase tracking-widest">
+                          {project.shipyard}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 5. In Build ── */}
+      {inBuildProjects.length > 0 && (
+        <section className="section-dark section-padding">
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  In Build
+                </p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
+                  In Build
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors group"
+              >
+                View all
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {inBuildProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom relative overflow-hidden bg-white/5 rounded-2xl">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-auto block"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-[5]" />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8">
+                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
+                        {project.title}
+                      </h3>
+                      {project.shipyard && (
+                        <p className="text-sm text-white/60 uppercase tracking-widest">
+                          {project.shipyard}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 5. Concepts ── */}
+      {conceptProjects.length > 0 && (
+        <section className="section-padding bg-h2-light">
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3">Concepts</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
+                  Concepts
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+              >
+                View all
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {conceptProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom img-overlay relative overflow-hidden bg-muted rounded-2xl">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-auto block"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/30 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400 z-[5]" />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-6 md:p-8 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400">
+                      <h3 className="text-xl md:text-2xl font-medium text-white mb-1 tracking-[-0.02em]">
+                        {project.title}
+                      </h3>
+                      {project.shipyard && (
+                        <p className="text-sm text-white/60 uppercase tracking-widest">
+                          {project.shipyard}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 6. Services ── */}
+      <section className="section-padding">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            <div>
+              <p className="label-text mb-4">What We Do</p>
+              <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl mb-6">
+                Our Services
+              </h2>
+              <p className="text-h2-body leading-relaxed max-w-lg">
+                From first sketch to final delivery, H2 provides a complete
+                design service for superyachts, tenders, and luxury residences.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+              {services.map((service) => (
+                <div key={service.number}>
+                  <span className="heading-serif text-3xl md:text-4xl block mb-3 text-[var(--h2-cyan)]/30">
+                    {service.number}
+                  </span>
+                  <h3 className="text-lg font-medium mb-2 tracking-[-0.02em] text-h2-dark">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm text-h2-body leading-relaxed">{service.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. Quote ── */}
+      <section className="section-padding bg-h2-cream">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <span
+              className="font-serif block text-[8rem] md:text-[10rem] leading-none select-none"
+              style={{ color: 'rgba(19, 167, 227, 0.15)' }}
+              aria-hidden="true"
+            >
+              &ldquo;
+            </span>
+            <blockquote className="heading-serif text-3xl md:text-4xl lg:text-5xl -mt-16 md:-mt-20 mb-10">
+              H2 pride ourselves in not having a &lsquo;house style&rsquo;
+            </blockquote>
+            <div>
+              <p className="text-sm font-medium tracking-wide uppercase text-h2-dark">
+                Jonny Horsfield
+              </p>
+              <p className="text-sm text-h2-muted mt-1">
+                Owner &amp; Creative Director
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. Offices ── */}
+      <section className="section-padding bg-h2-light">
+        <div className="container">
+          <div className="text-center mb-16">
+            <p className="label-text mb-4">Our Studios</p>
+            <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-dark">
+              London &amp; Nice
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 max-w-4xl mx-auto">
+            {/* London */}
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-medium tracking-[-0.03em] text-h2-dark mb-2">
+                London
+              </h3>
+              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6 mx-auto md:mx-0" />
+              <address className="not-italic text-h2-body leading-[1.8] space-y-0.5 mb-4">
+                <p>8 Princeton Court</p>
+                <p>53/55 Felsham Road</p>
+                <p>Putney, SW15 1AZ</p>
+                <p>London, UK</p>
+              </address>
+              <p className="text-h2-body">
+                <a
+                  href="tel:+442087885008"
+                  className="hover:text-h2-dark transition-colors"
+                >
+                  +44 (0)208 788 5008
+                </a>
+              </p>
+              <p className="text-h2-body mt-1">
+                <a
+                  href="mailto:info@h2yachtdesign.com"
+                  className="hover:text-h2-dark transition-colors"
+                >
+                  info@h2yachtdesign.com
+                </a>
+              </p>
+            </div>
+
+            {/* Nice */}
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-medium tracking-[-0.03em] text-h2-dark mb-2">
+                Nice
+              </h3>
+              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6 mx-auto md:mx-0" />
+              <address className="not-italic text-h2-body leading-[1.8] space-y-0.5 mb-4">
+                <p>4 Palais Jolienne</p>
+                <p>43 Boulevard Gambetta</p>
+                <p>5th Floor, 06000</p>
+                <p>Nice, France</p>
+              </address>
+              <p className="text-h2-body">
+                <a
+                  href="tel:+33422328906"
+                  className="hover:text-h2-dark transition-colors"
+                >
+                  +33 422 328 906
+                </a>
+              </p>
+              <p className="text-h2-body mt-1">
+                <a
+                  href="mailto:info@h2yachtdesign.com"
+                  className="hover:text-h2-dark transition-colors"
+                >
+                  info@h2yachtdesign.com
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. Latest News ── */}
+      {latestNews.length > 0 && (
+        <section className="section-padding">
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3">Press &amp; Features</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">Latest News</h2>
+              </div>
+              <Link
+                href="/news"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+              >
+                All articles
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {latestNews.map((article: any) => (
+                <Link
+                  key={article._id}
+                  href={`/news/${article.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom aspect-[4/3] overflow-hidden mb-4 bg-muted rounded-xl">
+                    {article.mainImage && (
+                      <img
+                        src={urlFor(article.mainImage)
+                          .width(600)
+                          .height(450)
+                          .url()}
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <p className="text-sm text-h2-muted mb-2">
+                    {new Date(article.publishedAt).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                  </p>
+                  <h3 className="text-lg font-medium tracking-[-0.02em] group-hover:text-h2-cyan transition-colors">
+                    {article.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-12 md:hidden text-center">
+              <Link
+                href="/news"
+                className="inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+              >
+                All articles
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 9. CTA ── */}
+      <section className="section-dark section-padding">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl mb-5">Begin Your Journey</h2>
+            <p className="text-lg leading-relaxed mb-10 max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.65)' }}>
+              Whether you&rsquo;re planning a new build, a comprehensive refit,
+              or a luxury residence, our team is ready to bring your vision to
+              life.
+            </p>
+            <Link href="/contact" className="btn-outline-light">
+              Get in Touch
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  )
+}
