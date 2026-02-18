@@ -63,6 +63,8 @@ export async function getProjectBySlug(slug: string) {
       mainImage,
       gallery,
       status,
+      designScope,
+      exteriorDesigner,
       specifications
     }`,
     { slug }

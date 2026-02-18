@@ -110,15 +110,17 @@ export default function Projects() {
                   className="group block"
                 >
                   {/* Image — clean zoom, no overlay */}
-                  <div className="img-zoom bg-h2-light overflow-hidden rounded-xl">
+                  <div className="img-zoom bg-h2-light overflow-hidden rounded-xl aspect-[4/3]">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
                           .width(900)
+                          .height(675)
+                          .fit('crop')
                           .quality(85)
                           .url()}
                         alt={project.title}
-                        className="w-full h-auto block"
+                        className="w-full h-full object-cover block"
                       />
                     )}
                   </div>

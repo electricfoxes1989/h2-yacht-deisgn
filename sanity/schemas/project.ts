@@ -160,6 +160,26 @@ export default defineType({
       initialValue: 0,
     }),
     defineField({
+      name: 'designScope',
+      title: 'Design Scope',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Exterior Design', value: 'exterior' },
+          { title: 'Interior Design', value: 'interior' },
+        ],
+      },
+      description: 'What H2 designed — select one or both',
+    }),
+    defineField({
+      name: 'exteriorDesigner',
+      title: 'Exterior Designer',
+      type: 'string',
+      description: 'If exterior was by another studio (e.g., "Unique Yacht Design")',
+      hidden: ({ parent }: any) => parent?.designScope?.includes('exterior'),
+    }),
+    defineField({
       name: 'status',
       title: 'Status',
       type: 'string',

@@ -122,10 +122,10 @@ export default function Home() {
     .slice(0, 4)
   const inBuildProjects = allProjects
     .filter((p: any) => p.category === 'in-build')
-    .slice(0, 4)
+    .slice(0, 2)
   const conceptProjects = allProjects
     .filter((p: any) => p.category === 'concepts')
-    .slice(0, 4)
+    .slice(0, 3)
   const tenderProjects = allProjects
     .filter((p: any) => p.category === 'tenders')
     .slice(0, 4)
@@ -195,7 +195,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 2. Exterior Design ── */}
+      {/* ── 2. Exterior Design — 4 projects, 2×2 grid ── */}
       {newBuildProjects.length > 0 && (
         <section className="section-padding">
           <div className="container">
@@ -207,7 +207,7 @@ export default function Home() {
                 </h2>
               </div>
               <Link
-                href="/projects"
+                href="/projects/category/exterior"
                 className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
               >
                 View all projects
@@ -222,15 +222,17 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
                           .width(900)
+                          .height(675)
+                          .fit('crop')
                           .quality(85)
                           .url()}
                         alt={project.title}
-                        className="w-full h-auto block"
+                        className="w-full h-full object-cover block"
                       />
                     )}
                   </div>
@@ -250,42 +252,44 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 3. Bespoke Projects (Hotel & Home + Tenders) ── */}
-      {bespokeProjects.length > 0 && (
+      {/* ── 3. Interiors — 4 projects, cream background ── */}
+      {refitProjects.length > 0 && (
         <section className="section-padding bg-h2-cream">
           <div className="container">
             <div className="flex items-end justify-between mb-12">
               <div>
-                <p className="label-text mb-3">Hotel &amp; Home &middot; Tenders</p>
+                <p className="label-text mb-3">Interior Design</p>
                 <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
-                  Bespoke Projects
+                  Interiors
                 </h2>
               </div>
               <Link
-                href="/projects"
+                href="/projects/category/interiors"
                 className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
               >
-                View all
+                View all interiors
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {bespokeProjects.map((project: any) => (
+              {refitProjects.map((project: any) => (
                 <Link
                   key={project._id}
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
                           .width(900)
+                          .height(675)
+                          .fit('crop')
                           .quality(85)
                           .url()}
                         alt={project.title}
-                        className="w-full h-auto block"
+                        className="w-full h-full object-cover block"
                       />
                     )}
                   </div>
@@ -294,9 +298,9 @@ export default function Home() {
                     <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-h2-muted mt-1">
-                      {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
-                    </p>
+                    {project.shipyard && (
+                      <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -320,76 +324,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 4. Refit — Blue brand section ── */}
-      {refitProjects.length > 0 && (
-        <section className="section-padding" style={{ backgroundColor: 'var(--h2-cyan)', color: 'white' }}>
-          <div className="container">
-            <div className="flex items-end justify-between mb-12">
-              <div>
-                <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.7)' }}>Refit</p>
-                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-white">
-                  Refit
-                </h2>
-              </div>
-              <Link
-                href="/projects"
-                className="hidden md:inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors group"
-              >
-                View all
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {refitProjects.map((project: any) => (
-                <Link
-                  key={project._id}
-                  href={`/projects/${project.slug.current}`}
-                  className="group block"
-                >
-                  <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl">
-                    {project.mainImage && (
-                      <img
-                        src={urlFor(project.mainImage)
-                          .width(900)
-                          .quality(85)
-                          .url()}
-                        alt={project.title}
-                        className="w-full h-auto block"
-                      />
-                    )}
-                  </div>
-                  <div className="project-card-text mt-5">
-                    <div className="accent-line mb-4" />
-                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-white group-hover:text-white/80 transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                    {project.shipyard && (
-                      <p className="text-sm text-white/50 mt-1">{project.shipyard}</p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── 5. In Build ── */}
+      {/* ── 4. In Build — 2 featured projects, side by side ── */}
       {inBuildProjects.length > 0 && (
         <section className="section-dark section-padding">
           <div className="container">
             <div className="flex items-end justify-between mb-12">
               <div>
                 <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  In Build
+                  Currently Under Construction
                 </p>
                 <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
                   In Build
                 </h2>
               </div>
               <Link
-                href="/projects"
+                href="/projects/category/in-build"
                 className="hidden md:inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors group"
               >
                 View all
@@ -404,15 +353,17 @@ export default function Home() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom overflow-hidden bg-white/5 rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-white/5 rounded-2xl aspect-[4/3]">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
                           .width(900)
+                          .height(675)
+                          .fit('crop')
                           .quality(85)
                           .url()}
                         alt={project.title}
-                        className="w-full h-auto block"
+                        className="w-full h-full object-cover block"
                       />
                     )}
                   </div>
@@ -432,19 +383,19 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 5. Concepts ── */}
+      {/* ── 5. Concepts — 3 projects, 1 large + 2 small ── */}
       {conceptProjects.length > 0 && (
         <section className="section-padding bg-h2-light">
           <div className="container">
             <div className="flex items-end justify-between mb-12">
               <div>
-                <p className="label-text mb-3">Concepts</p>
+                <p className="label-text mb-3">Design Exploration</p>
                 <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
                   Concepts
                 </h2>
               </div>
               <Link
-                href="/projects"
+                href="/projects/category/concepts"
                 className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
               >
                 View all
@@ -452,22 +403,56 @@ export default function Home() {
               </Link>
             </div>
 
+            {/* Asymmetric layout: 1 large left + 2 stacked right */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {conceptProjects.map((project: any) => (
+              {/* First project — large */}
+              {conceptProjects[0] && (
+                <Link
+                  href={`/projects/${conceptProjects[0].slug.current}`}
+                  className="group block md:row-span-2"
+                >
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl h-full">
+                    {conceptProjects[0].mainImage && (
+                      <img
+                        src={urlFor(conceptProjects[0].mainImage)
+                          .width(900)
+                          .quality(85)
+                          .url()}
+                        alt={conceptProjects[0].title}
+                        className="w-full h-full object-cover block"
+                      />
+                    )}
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                      {conceptProjects[0].title}
+                    </h3>
+                    {conceptProjects[0].shipyard && (
+                      <p className="text-sm text-h2-muted mt-1">{conceptProjects[0].shipyard}</p>
+                    )}
+                  </div>
+                </Link>
+              )}
+
+              {/* 2nd & 3rd projects — stacked right */}
+              {conceptProjects.slice(1, 3).map((project: any) => (
                 <Link
                   key={project._id}
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl">
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage)
                           .width(900)
+                          .height(675)
+                          .fit('crop')
                           .quality(85)
                           .url()}
                         alt={project.title}
-                        className="w-full h-auto block"
+                        className="w-full h-full object-cover block"
                       />
                     )}
                   </div>
@@ -487,7 +472,64 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 6. Services ── */}
+      {/* ── 6. Bespoke Projects — cyan brand section ── */}
+      {bespokeProjects.length > 0 && (
+        <section className="section-padding" style={{ backgroundColor: 'var(--h2-cyan)', color: 'white' }}>
+          <div className="container">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.7)' }}>Hotel &amp; Home &middot; Tenders</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-white">
+                  Bespoke Projects
+                </h2>
+              </div>
+              <Link
+                href="/projects/category/bespoke"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors group"
+              >
+                View all
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {bespokeProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group block"
+                >
+                  <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl aspect-[4/3]">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(900)
+                          .height(675)
+                          .fit('crop')
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-full object-cover block"
+                      />
+                    )}
+                  </div>
+                  <div className="project-card-text mt-5">
+                    <div className="accent-line mb-4" />
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-white group-hover:text-white/80 transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-white/50 mt-1">
+                      {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 7. Services ── */}
       <section className="section-padding">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -518,7 +560,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 7. Quote ── */}
+      {/* ── 8. Quote ── */}
       <section className="section-padding bg-h2-cream">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
@@ -544,7 +586,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 7. Offices ── */}
+      {/* ── 9. Offices ── */}
       <section className="section-padding bg-h2-light">
         <div className="container">
           <div className="text-center mb-16">
@@ -554,13 +596,20 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
             {/* London */}
-            <div className="text-center md:text-left">
+            <div>
+              <div className="overflow-hidden rounded-2xl mb-8 bg-muted">
+                <img
+                  src="/images/h2-studio.jpg"
+                  alt="H2 Yacht Design London Studio"
+                  className="w-full h-auto block"
+                />
+              </div>
               <h3 className="text-xl font-medium tracking-[-0.03em] text-h2-dark mb-2">
                 London
               </h3>
-              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6 mx-auto md:mx-0" />
+              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6" />
               <address className="not-italic text-h2-body leading-[1.8] space-y-0.5 mb-4">
                 <p>8 Princeton Court</p>
                 <p>53/55 Felsham Road</p>
@@ -586,11 +635,17 @@ export default function Home() {
             </div>
 
             {/* Nice */}
-            <div className="text-center md:text-left">
+            <div>
+              <div className="overflow-hidden rounded-2xl mb-8 bg-[var(--h2-navy)] flex items-center justify-center" style={{ aspectRatio: '16/10' }}>
+                <div className="text-center px-8">
+                  <p className="heading-serif text-3xl md:text-4xl text-white mb-2">Nice</p>
+                  <p className="text-sm text-white/50 uppercase tracking-[0.15em]">French Riviera</p>
+                </div>
+              </div>
               <h3 className="text-xl font-medium tracking-[-0.03em] text-h2-dark mb-2">
                 Nice
               </h3>
-              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6 mx-auto md:mx-0" />
+              <div className="h-px w-10 bg-[var(--h2-cyan)] mb-6" />
               <address className="not-italic text-h2-body leading-[1.8] space-y-0.5 mb-4">
                 <p>4 Palais Jolienne</p>
                 <p>43 Boulevard Gambetta</p>
@@ -618,7 +673,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 8. Latest News ── */}
+      {/* ── 10. Latest News ── */}
       {latestNews.length > 0 && (
         <section className="section-padding">
           <div className="container">
@@ -682,7 +737,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 9. CTA ── */}
+      {/* ── 11. CTA ── */}
       <section className="section-dark section-padding">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">

@@ -295,6 +295,30 @@ export default function ProjectDetail() {
                           </span>
                         </div>
                       )}
+                      {project.designScope && project.designScope.length > 0 && (
+                        <div className="py-4">
+                          <span className="text-xs uppercase tracking-widest text-h2-muted block mb-1">
+                            H2 Design Scope
+                          </span>
+                          <span className="text-base font-medium text-h2-dark">
+                            {project.designScope.includes('exterior') && project.designScope.includes('interior')
+                              ? 'Exterior & Interior'
+                              : project.designScope.includes('exterior')
+                              ? 'Exterior Design'
+                              : 'Interior Design'}
+                          </span>
+                        </div>
+                      )}
+                      {project.exteriorDesigner && (
+                        <div className="py-4">
+                          <span className="text-xs uppercase tracking-widest text-h2-muted block mb-1">
+                            Exterior Designer
+                          </span>
+                          <span className="text-base font-medium text-h2-dark">
+                            {project.exteriorDesigner}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Technical specifications */}
@@ -441,12 +465,12 @@ export default function ProjectDetail() {
                     href={`/projects/${rp.slug?.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-muted rounded-xl">
+                    <div className="img-zoom overflow-hidden bg-muted rounded-xl aspect-[4/3]">
                       {rp.mainImage && (
                         <img
-                          src={urlFor(rp.mainImage).width(800).quality(85).url()}
+                          src={urlFor(rp.mainImage).width(800).height(600).fit('crop').quality(85).url()}
                           alt={rp.title}
-                          className="w-full h-auto block"
+                          className="w-full h-full object-cover block"
                         />
                       )}
                     </div>
