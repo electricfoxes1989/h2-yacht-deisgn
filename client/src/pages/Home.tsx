@@ -334,6 +334,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Featured Image — Arrow Aerial ── */}
+      <section className="relative w-full overflow-hidden">
+        <div className="relative aspect-[21/9]">
+          <img
+            src="/images/arrow-feadship-aerial.webp"
+            alt="Arrow by Feadship — aerial view"
+            className="w-full h-full object-cover"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+          {/* Caption */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-14">
+            <div className="container">
+              <div className="h-px w-12 bg-[var(--h2-cyan)] mb-5" />
+              <h3 className="heading-serif text-2xl md:text-4xl lg:text-5xl text-white mb-2">
+                Arrow
+              </h3>
+              <p className="text-sm md:text-base text-white/70 tracking-wide">
+                Feadship — Exterior Design
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 2. Exterior Design — 4 projects, 2×2 grid ── */}
       {newBuildProjects.length > 0 && (
         <section className="section-padding">
