@@ -4,7 +4,7 @@ import Footer from '@/components/Footer'
 import HeroSlideshow from '@/components/HeroSlideshow'
 import { getFeaturedProjects, getAllProjects, getLatestNews, urlFor } from '@/lib/sanity'
 import { Link } from 'wouter'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
 function AnimatedStat({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -86,6 +86,145 @@ const heroImages = [
   { id: 'hero-08', src: '/images/hero/hero-08.jpg', title: 'Design Detail', subtitle: '' },
 ]
 
+function ConceptsSlideshow({ concepts }: { concepts: any[] }) {
+  const [current, setCurrent] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const total = concepts.length
+
+  const goTo = (index: number) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setCurrent(index)
+    setTimeout(() => setIsTransitioning(false), 600)
+  }
+
+  const prev = () => goTo((current - 1 + total) % total)
+  const next = () => goTo((current + 1) % total)
+
+  const concept = concepts[current]
+  if (!concept) return null
+
+  return (
+    <section className="bg-h2-light overflow-hidden">
+      <div className="container section-padding">
+        {/* Header */}
+        <div className="flex items-end justify-between mb-12">
+          <div>
+            <p className="label-text mb-3">Design Exploration</p>
+            <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
+              Concepts
+            </h2>
+          </div>
+          <div className="flex items-center gap-4">
+            {/* Slide counter */}
+            <span className="label-text text-h2-muted hidden md:block">
+              {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+            </span>
+            {/* Nav arrows */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prev}
+                className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center text-h2-dark hover:bg-h2-dark hover:text-white hover:border-transparent transition-all duration-300"
+                aria-label="Previous concept"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={next}
+                className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center text-h2-dark hover:bg-h2-dark hover:text-white hover:border-transparent transition-all duration-300"
+                aria-label="Next concept"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Slideshow */}
+        <Link
+          href={`/projects/${concept.slug?.current}`}
+          className="group block"
+        >
+          <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl bg-muted">
+            {concepts.map((c: any, i: number) => (
+              <div
+                key={c._id}
+                className="absolute inset-0 transition-all duration-700 ease-in-out"
+                style={{
+                  opacity: i === current ? 1 : 0,
+                  transform: i === current ? 'scale(1)' : 'scale(1.05)',
+                }}
+              >
+                {c.mainImage && (
+                  <img
+                    src={urlFor(c.mainImage)
+                      .width(1600)
+                      .height(685)
+                      .fit('crop')
+                      .quality(90)
+                      .url()}
+                    alt={c.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            ))}
+
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+
+            {/* Title overlay */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+              <div
+                className="transition-all duration-500 ease-out"
+                style={{
+                  opacity: isTransitioning ? 0 : 1,
+                  transform: isTransitioning ? 'translateY(12px)' : 'translateY(0)',
+                }}
+              >
+                <div className="h-px w-12 bg-[var(--h2-cyan)] mb-5" />
+                <h3 className="heading-serif text-2xl md:text-4xl lg:text-5xl text-white mb-2 group-hover:text-white/90 transition-colors">
+                  {concept.title}
+                </h3>
+                {concept.length && (
+                  <p className="text-sm md:text-base text-white/60">{concept.length}m</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        {/* Dot indicators */}
+        <div className="flex items-center justify-center gap-2 mt-8">
+          {concepts.map((_: any, i: number) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === current
+                  ? 'w-8 bg-[var(--h2-cyan)]'
+                  : 'w-1.5 bg-gray-300 hover:bg-gray-400'
+              }`}
+              aria-label={`Go to concept ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* View all link - mobile */}
+        <div className="mt-8 text-center md:hidden">
+          <Link
+            href="/projects/category/concepts"
+            className="inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+          >
+            View all concepts
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Home() {
   const [featuredProjects, setFeaturedProjects] = useState([])
   const [allProjects, setAllProjects] = useState<any[]>([])
@@ -125,7 +264,7 @@ export default function Home() {
     .slice(0, 2)
   const conceptProjects = allProjects
     .filter((p: any) => p.category === 'concepts')
-    .slice(0, 3)
+    .slice(0, 8)
   const tenderProjects = allProjects
     .filter((p: any) => p.category === 'tenders')
     .slice(0, 4)
@@ -383,93 +522,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 5. Concepts — 3 projects, 1 large + 2 small ── */}
+      {/* ── 5. Concepts — Interactive Slideshow ── */}
       {conceptProjects.length > 0 && (
-        <section className="section-padding bg-h2-light">
-          <div className="container">
-            <div className="flex items-end justify-between mb-12">
-              <div>
-                <p className="label-text mb-3">Design Exploration</p>
-                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
-                  Concepts
-                </h2>
-              </div>
-              <Link
-                href="/projects/category/concepts"
-                className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
-              >
-                View all
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* Asymmetric layout: 1 large left + 2 stacked right */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {/* First project — large */}
-              {conceptProjects[0] && (
-                <Link
-                  href={`/projects/${conceptProjects[0].slug.current}`}
-                  className="group block md:row-span-2"
-                >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl h-full">
-                    {conceptProjects[0].mainImage && (
-                      <img
-                        src={urlFor(conceptProjects[0].mainImage)
-                          .width(900)
-                          .quality(85)
-                          .url()}
-                        alt={conceptProjects[0].title}
-                        className="w-full h-full object-cover block"
-                      />
-                    )}
-                  </div>
-                  <div className="project-card-text mt-5">
-                    <div className="accent-line mb-4" />
-                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
-                      {conceptProjects[0].title}
-                    </h3>
-                    {conceptProjects[0].shipyard && (
-                      <p className="text-sm text-h2-muted mt-1">{conceptProjects[0].shipyard}</p>
-                    )}
-                  </div>
-                </Link>
-              )}
-
-              {/* 2nd & 3rd projects — stacked right */}
-              {conceptProjects.slice(1, 3).map((project: any) => (
-                <Link
-                  key={project._id}
-                  href={`/projects/${project.slug.current}`}
-                  className="group block"
-                >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
-                    {project.mainImage && (
-                      <img
-                        src={urlFor(project.mainImage)
-                          .width(900)
-                          .height(675)
-                          .fit('crop')
-                          .quality(85)
-                          .url()}
-                        alt={project.title}
-                        className="w-full h-full object-cover block"
-                      />
-                    )}
-                  </div>
-                  <div className="project-card-text mt-5">
-                    <div className="accent-line mb-4" />
-                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                    {project.shipyard && (
-                      <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ConceptsSlideshow concepts={conceptProjects} />
       )}
 
       {/* ── 6. Bespoke Projects — cyan brand section ── */}
