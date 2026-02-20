@@ -22,6 +22,8 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [previousIndex, setPreviousIndex] = useState<number | null>(null)
   const [isAnimating, setIsAnimating] = useState(false)
+  // Track which YouTube slides have been "activated" (lazy load)
+  const [loadedYT, setLoadedYT] = useState<Set<number>>(new Set([0]))
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const SLIDE_DURATION = 7000
 
@@ -31,6 +33,12 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
       setIsAnimating(true)
       setPreviousIndex(currentIndex)
       setCurrentIndex(next)
+      // Mark the next slide's YouTube as loaded
+      setLoadedYT((prev) => {
+        const copy = new Set(prev)
+        copy.add(next)
+        return copy
+      })
       setTimeout(() => {
         setPreviousIndex(null)
         setIsAnimating(false)
@@ -57,6 +65,24 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
     }
   }, [currentIndex, slides.length, goToNext])
 
+  // Preload next slide's YouTube iframe 2s before transition
+  useEffect(() => {
+    if (slides.length <= 1) return
+    const nextIndex = (currentIndex + 1) % slides.length
+    const nextSlide = slides[nextIndex]
+    if (nextSlide?.youtubeId && !loadedYT.has(nextIndex)) {
+      const preloadDelay = slides[currentIndex]?.youtubeId ? 12000 : 4000
+      const timer = setTimeout(() => {
+        setLoadedYT((prev) => {
+          const copy = new Set(prev)
+          copy.add(nextIndex)
+          return copy
+        })
+      }, preloadDelay)
+      return () => clearTimeout(timer)
+    }
+  }, [currentIndex, slides, loadedYT])
+
   if (!slides || slides.length === 0) {
     return (
       <div className="h-screen w-full bg-black flex items-center justify-center">
@@ -74,6 +100,8 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
         ? urlFor(slide.mainImage).width(1920).quality(90).url()
         : undefined
 
+    const shouldLoadYT = slide.youtubeId && loadedYT.has(index)
+
     return (
       <div
         key={slide._id + '-' + index}
@@ -84,18 +112,30 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
           zIndex: isCurrent ? 2 : 1,
         }}
       >
-        {/* YouTube, Video, or Image */}
+        {/* YouTube (lazy), Video, or Image */}
         {slide.youtubeId ? (
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <iframe
-              src={`https://www.youtube.com/embed/${slide.youtubeId}?autoplay=${isCurrent ? 1 : 0}&mute=1&loop=1&playlist=${slide.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1`}
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              className="absolute w-[120%] h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
-              style={{ border: 'none' }}
-              title={slide.title}
+          shouldLoadYT ? (
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${slide.youtubeId}?autoplay=${isCurrent ? 1 : 0}&mute=1&loop=1&playlist=${slide.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="absolute w-[120%] h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
+                style={{ border: 'none' }}
+                title={slide.title}
+              />
+            </div>
+          ) : (
+            /* Placeholder while YouTube loads — shows thumbnail */
+            <div
+              className="absolute inset-0 w-full h-full bg-black"
+              style={{
+                backgroundImage: `url(https://img.youtube.com/vi/${slide.youtubeId}/maxresdefault.jpg)`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             />
-          </div>
+          )
         ) : slide.videoUrl ? (
           <video
             src={slide.videoUrl}

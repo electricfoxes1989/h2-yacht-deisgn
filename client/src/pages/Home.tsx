@@ -98,12 +98,12 @@ const heroImages = [
   { id: 'hero-scout-yt', src: '', title: 'Scout', subtitle: 'Hakvoort', youtubeId: 'edIIraSLFt4', slug: 'scout' },
   { id: 'hero-01', src: '/images/hero/hero-01.jpg', title: 'Arrow', subtitle: 'Feadship' },
   { id: 'hero-lusail-yt', src: '', title: 'Al Lusail', subtitle: 'L\u00fcrssen', youtubeId: 'fmubKGBMYmQ', slug: 'jupiter' },
-  { id: 'hero-06', src: '/images/hero/hero-06.jpg', title: 'Beach Club', subtitle: '' },
-  { id: 'hero-10', src: '/images/hero/hero-10.jpg', title: 'Interior', subtitle: 'Jeff Brown' },
+  { id: 'hero-06', src: '/images/hero/hero-06.jpg', title: '', subtitle: '' },
+  { id: 'hero-10', src: '/images/hero/hero-10.jpg', title: '', subtitle: '' },
   { id: 'hero-13', src: '/images/hero/hero-13.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
   { id: 'hero-14', src: '/images/hero/hero-14.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
-  { id: 'hero-17', src: '/images/hero/hero-17.jpg', title: 'Beach Club', subtitle: '' },
-  { id: 'hero-08', src: '/images/hero/hero-08.jpg', title: 'Design Detail', subtitle: '' },
+  { id: 'hero-17', src: '/images/hero/hero-17.jpg', title: '', subtitle: '' },
+  { id: 'hero-08', src: '/images/hero/hero-08.jpg', title: '', subtitle: '' },
 ]
 
 function ConceptsSlideshow({ concepts }: { concepts: any[] }) {
@@ -364,36 +364,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ── Featured Image — Arrow Aerial with Parallax ── */}
-      <section className="relative w-full overflow-hidden">
-        <ParallaxImage
-          src="/images/arrow-feadship-aerial.webp"
-          alt="Arrow by Feadship — aerial view"
-          aspectRatio="21/9"
-          speed={0.35}
-          overlay={
-            <>
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none z-10" />
-              {/* Caption */}
-              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-14 z-20">
-                <div className="container">
-                  <ScrollReveal direction="up" delay={0.1}>
-                    <div className="h-px w-12 bg-[var(--h2-cyan)] mb-5" />
-                    <h3 className="heading-serif text-2xl md:text-4xl lg:text-5xl text-white mb-2">
-                      Arrow
-                    </h3>
-                    <p className="text-sm md:text-base text-white/70 tracking-wide">
-                      Feadship — Exterior Design
-                    </p>
-                  </ScrollReveal>
-                </div>
-              </div>
-            </>
-          }
-        />
       </section>
 
       {/* ── 2. Exterior Design — 4 projects, 2×2 grid ── */}
