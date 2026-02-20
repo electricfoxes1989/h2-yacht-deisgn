@@ -192,31 +192,33 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
       {/* Content: bottom-left */}
       <div className="relative z-10 h-full flex items-end">
         <div className="container pb-24 md:pb-28">
-          <div
-            key={currentSlide._id}
-            className="max-w-3xl animate-slide-in"
-          >
-            <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-3">
-              {currentSlide.title}
-            </h1>
-            {currentSlide.shipyard && (
-              <p
-                className="text-xs md:text-sm uppercase tracking-[0.2em] mb-5"
-                style={{ color: 'rgba(255,255,255,0.6)' }}
-              >
-                {currentSlide.shipyard}
-              </p>
-            )}
-            {currentSlide.slug?.current && (
-              <Link
-                href={`/projects/${currentSlide.slug.current}`}
-                className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors group"
-              >
-                View Project
-                <span className="inline-block transition-transform group-hover:translate-x-1">&rarr;</span>
-              </Link>
-            )}
-          </div>
+          {currentSlide.title && (
+            <div
+              key={currentSlide._id}
+              className="max-w-3xl animate-slide-in"
+            >
+              <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-3">
+                {currentSlide.title}
+              </h1>
+              {currentSlide.shipyard && (
+                <p
+                  className="text-xs md:text-sm uppercase tracking-[0.2em] mb-5"
+                  style={{ color: 'rgba(255,255,255,0.6)' }}
+                >
+                  {currentSlide.shipyard}
+                </p>
+              )}
+              {currentSlide.slug?.current && (
+                <Link
+                  href={`/projects/${currentSlide.slug.current}`}
+                  className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors group"
+                >
+                  View Project
+                  <span className="inline-block transition-transform group-hover:translate-x-1">&rarr;</span>
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

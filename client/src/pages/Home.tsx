@@ -651,9 +651,9 @@ export default function Home() {
         <ConceptsSlideshow concepts={conceptProjects} />
       )}
 
-      {/* ── 6. Bespoke Projects — cyan brand section ── */}
+      {/* ── 6. Bespoke Projects — dark navy section ── */}
       {bespokeProjects.length > 0 && (
-        <section className="section-padding" style={{ backgroundColor: 'var(--h2-cyan)', color: 'white' }}>
+        <section className="section-padding" style={{ backgroundColor: 'var(--h2-navy)', color: 'white' }}>
           <div className="container">
             <ScrollReveal>
               <div className="flex items-end justify-between mb-12">
