@@ -43,7 +43,9 @@ export async function getAllProjects() {
       year,
       length,
       excerpt,
-      mainImage
+      mainImage,
+      designScope,
+      "interiorImage": gallery[0]
     }
   `)
 }

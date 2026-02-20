@@ -277,8 +277,8 @@ export default function Home() {
   const hotelHomeProjects = allProjects
     .filter((p: any) => p.category === 'hotel-home')
     .slice(0, 4)
-  const refitProjects = allProjects
-    .filter((p: any) => p.category === 'refit')
+  const interiorProjects = allProjects
+    .filter((p: any) => p.designScope?.includes('interior'))
     .slice(0, 4)
   const inBuildProjects = allProjects
     .filter((p: any) => p.category === 'in-build')
@@ -429,7 +429,7 @@ export default function Home() {
       )}
 
       {/* ── 3. Interiors — 4 projects, cream background ── */}
-      {refitProjects.length > 0 && (
+      {interiorProjects.length > 0 && (
         <section className="section-padding bg-h2-cream">
           <div className="container">
             <ScrollReveal>
@@ -451,43 +451,46 @@ export default function Home() {
             </ScrollReveal>
 
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" staggerDelay={0.12}>
-              {refitProjects.map((project: any) => (
-                <motion.div key={project._id} variants={staggerItem}>
-                  <Link
-                    href={`/projects/${project.slug.current}`}
-                    className="group block"
-                  >
-                    <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
-                      {project.mainImage && (
-                        <img
-                          src={urlFor(project.mainImage)
-                            .width(900)
-                            .height(675)
-                            .fit('crop')
-                            .quality(85)
-                            .url()}
-                          alt={project.title}
-                          className="w-full h-full object-cover block"
-                        />
-                      )}
-                    </div>
-                    <div className="project-card-text mt-5">
-                      <div className="accent-line mb-4" />
-                      <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
-                        {project.title}
-                      </h3>
-                      {project.shipyard && (
-                        <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
-                      )}
-                      {project.excerpt && (
-                        <p className="text-sm text-h2-body mt-2 leading-relaxed line-clamp-2">
-                          {project.excerpt}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+              {interiorProjects.map((project: any) => {
+                const displayImage = project.interiorImage || project.mainImage
+                return (
+                  <motion.div key={project._id} variants={staggerItem}>
+                    <Link
+                      href={`/projects/${project.slug.current}`}
+                      className="group block"
+                    >
+                      <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                        {displayImage && (
+                          <img
+                            src={urlFor(displayImage)
+                              .width(900)
+                              .height(675)
+                              .fit('crop')
+                              .quality(85)
+                              .url()}
+                            alt={project.title}
+                            className="w-full h-full object-cover block"
+                          />
+                        )}
+                      </div>
+                      <div className="project-card-text mt-5">
+                        <div className="accent-line mb-4" />
+                        <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                          {project.title}
+                        </h3>
+                        {project.shipyard && (
+                          <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
+                        )}
+                        {project.excerpt && (
+                          <p className="text-sm text-h2-body mt-2 leading-relaxed line-clamp-2">
+                            {project.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  </motion.div>
+                )
+              })}
             </StaggerContainer>
           </div>
         </section>
