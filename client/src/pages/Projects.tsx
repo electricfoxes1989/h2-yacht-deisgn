@@ -149,6 +149,11 @@ export default function Projects() {
                         )}
                       </div>
                     )}
+                    {project.excerpt && (
+                      <p className="text-sm text-h2-body mt-3 leading-relaxed line-clamp-2">
+                        {project.excerpt}
+                      </p>
+                    )}
                   </div>
                 </Link>
               ))}

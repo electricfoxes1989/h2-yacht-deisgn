@@ -1,9 +1,18 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { getProjectBySlug, getAllProjects, urlFor } from '@/lib/sanity'
 import { useRoute, Link } from 'wouter'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import {
+  ScrollReveal,
+  ParallaxImage,
+  HeroTextReveal,
+  StaggerContainer,
+  staggerItem,
+  ScaleReveal,
+} from '@/components/animations'
+import { motion } from 'framer-motion'
 
 const categoryLabels: Record<string, string> = {
   'new-build': 'New Build',
@@ -12,36 +21,6 @@ const categoryLabels: Record<string, string> = {
   concepts: 'Concepts',
   'hotel-home': 'Hotel & Home',
   tenders: 'Tenders & Toys',
-}
-
-function FadeInSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.15 },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
-    >
-      {children}
-    </div>
-  )
 }
 
 export default function ProjectDetail() {
@@ -114,43 +93,54 @@ export default function ProjectDetail() {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* ── Hero ── */}
+      {/* ── Hero with Parallax ── */}
       {project.mainImage && (
         <section className="relative h-[75vh] md:h-[85vh] w-full overflow-hidden">
-          <img
+          <ParallaxImage
             src={urlFor(project.mainImage).width(2400).quality(90).url()}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className="h-full w-full"
+            speed={0.25}
+            overlay={
+              <>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 z-10" />
+
+                {/* Back link */}
+                <div className="absolute top-28 left-0 z-20 container">
+                  <Link
+                    href="/projects"
+                    className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors tracking-wide"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    All Projects
+                  </Link>
+                </div>
+
+                {/* Title overlay */}
+                <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-20 z-20">
+                  <div className="container">
+                    <HeroTextReveal delay={0.2}>
+                      <span className="label-text text-white/50 block mb-4 tracking-[0.2em]">
+                        {categoryLabel}
+                      </span>
+                    </HeroTextReveal>
+                    <HeroTextReveal delay={0.35}>
+                      <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-4">
+                        {project.title}
+                      </h1>
+                    </HeroTextReveal>
+                    <HeroTextReveal delay={0.5}>
+                      {project.shipyard && (
+                        <p className="text-lg text-white/60 tracking-wide">
+                          {project.shipyard}{project.year ? ` \u2014 ${project.year}` : ''}
+                        </p>
+                      )}
+                    </HeroTextReveal>
+                  </div>
+                </div>
+              </>
+            }
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
-
-          {/* Back link */}
-          <div className="absolute top-28 left-0 z-20 container">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors tracking-wide"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              All Projects
-            </Link>
-          </div>
-
-          {/* Title overlay */}
-          <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-20">
-            <div className="container">
-              <span className="label-text text-white/50 block mb-4 tracking-[0.2em]">
-                {categoryLabel}
-              </span>
-              <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-4">
-                {project.title}
-              </h1>
-              {project.shipyard && (
-                <p className="text-lg text-white/60 tracking-wide">
-                  {project.shipyard}{project.year ? ` \u2014 ${project.year}` : ''}
-                </p>
-              )}
-            </div>
-          </div>
         </section>
       )}
 
@@ -160,7 +150,7 @@ export default function ProjectDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
             {/* Left — Description (3 cols) */}
             <div className="lg:col-span-3">
-              <FadeInSection>
+              <ScrollReveal>
                 {project.excerpt && (
                   <p className="heading-serif text-2xl md:text-3xl text-h2-dark leading-[1.4] mb-10">
                     {project.excerpt}
@@ -241,12 +231,12 @@ export default function ProjectDetail() {
                     })}
                   </div>
                 )}
-              </FadeInSection>
+              </ScrollReveal>
             </div>
 
             {/* Right — Specs sidebar (2 cols) */}
             <div className="lg:col-span-2">
-              <FadeInSection>
+              <ScrollReveal direction="right" delay={0.2}>
                 <div className="lg:sticky lg:top-32">
                   {/* Key details card */}
                   <div className="bg-h2-light rounded-2xl p-8 md:p-10">
@@ -355,7 +345,7 @@ export default function ProjectDetail() {
                     </Link>
                   </div>
                 </div>
-              </FadeInSection>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -365,11 +355,11 @@ export default function ProjectDetail() {
       {galleryImages.length > 0 && (
         <section className="pb-20 md:pb-28">
           <div className="container">
-            <FadeInSection>
+            <ScrollReveal>
               <div className="mb-12">
                 <span className="label-text text-h2-muted tracking-[0.2em]">Gallery</span>
               </div>
-            </FadeInSection>
+            </ScrollReveal>
           </div>
 
           {/* Alternating gallery layout */}
@@ -384,7 +374,7 @@ export default function ProjectDetail() {
 
               if (isFullWidth) {
                 return (
-                  <FadeInSection key={index}>
+                  <ScaleReveal key={index}>
                     <div className="container">
                       <div className="overflow-hidden rounded-xl">
                         <img
@@ -394,14 +384,14 @@ export default function ProjectDetail() {
                         />
                       </div>
                     </div>
-                  </FadeInSection>
+                  </ScaleReveal>
                 )
               }
 
               if (isPairFirst) {
                 const nextImage = galleryImages[index + 1]
                 return (
-                  <FadeInSection key={index}>
+                  <ScaleReveal key={index}>
                     <div className="container">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="overflow-hidden rounded-xl">
@@ -424,7 +414,7 @@ export default function ProjectDetail() {
                         )}
                       </div>
                     </div>
-                  </FadeInSection>
+                  </ScaleReveal>
                 )
               }
 
@@ -438,7 +428,7 @@ export default function ProjectDetail() {
       {relatedProjects.length > 0 && (
         <section className="section-padding bg-h2-light">
           <div className="container">
-            <FadeInSection>
+            <ScrollReveal>
               <div className="flex items-end justify-between mb-12">
                 <div>
                   <span className="label-text block mb-3 text-h2-muted tracking-[0.2em]">
@@ -456,11 +446,11 @@ export default function ProjectDetail() {
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-            </FadeInSection>
+            </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedProjects.map((rp: any, i: number) => (
-                <FadeInSection key={rp._id} className={`delay-${i * 100}`}>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" staggerDelay={0.12}>
+              {relatedProjects.map((rp: any) => (
+                <motion.div key={rp._id} variants={staggerItem}>
                   <Link
                     href={`/projects/${rp.slug?.current}`}
                     className="group block"
@@ -484,9 +474,9 @@ export default function ProjectDetail() {
                       )}
                     </div>
                   </Link>
-                </FadeInSection>
+                </motion.div>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
       )}
@@ -494,22 +484,24 @@ export default function ProjectDetail() {
       {/* ── CTA ── */}
       <section className="section-dark section-padding">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="label-text text-white/40 block mb-5 tracking-[0.2em]">
-              Start a Conversation
-            </span>
-            <h2 className="heading-serif text-3xl md:text-5xl lg:text-6xl text-white mb-6">
-              Ready to start your project?
-            </h2>
-            <p className="text-base text-white/60 leading-relaxed tracking-[-0.01em] mb-10 max-w-xl mx-auto">
-              Let&rsquo;s discuss how we can bring your vision to life with exceptional design and
-              craftsmanship.
-            </p>
-            <Link href="/contact" className="btn-outline-light">
-              Get in touch
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center">
+              <span className="label-text text-white/40 block mb-5 tracking-[0.2em]">
+                Start a Conversation
+              </span>
+              <h2 className="heading-serif text-3xl md:text-5xl lg:text-6xl text-white mb-6">
+                Ready to start your project?
+              </h2>
+              <p className="text-base text-white/60 leading-relaxed tracking-[-0.01em] mb-10 max-w-xl mx-auto">
+                Let&rsquo;s discuss how we can bring your vision to life with exceptional design and
+                craftsmanship.
+              </p>
+              <Link href="/contact" className="btn-outline-light">
+                Get in touch
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
