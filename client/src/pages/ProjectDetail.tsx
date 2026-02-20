@@ -93,54 +93,67 @@ export default function ProjectDetail() {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* ── Hero with Parallax ── */}
-      {project.mainImage && (
-        <section className="relative h-[75vh] md:h-[85vh] w-full overflow-hidden">
-          <ParallaxImage
-            src={urlFor(project.mainImage).width(2400).quality(90).url()}
-            alt={project.title}
-            className="h-full w-full"
-            speed={0.25}
-            overlay={
-              <>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 z-10" />
+      {/* ── Hero — YouTube Video or Parallax Image ── */}
+      {(project.heroVideoId || project.mainImage) && (
+        <section className="relative h-[75vh] md:h-[85vh] w-full overflow-hidden bg-black">
+          {project.heroVideoId ? (
+            /* YouTube Video Hero */
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+              <iframe
+                src={`https://www.youtube.com/embed/${project.heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${project.heroVideoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                className="absolute w-[140%] h-[140%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
+                style={{ border: 'none' }}
+                title={project.title}
+              />
+            </div>
+          ) : project.mainImage ? (
+            /* Parallax Image Hero */
+            <ParallaxImage
+              src={urlFor(project.mainImage).width(2400).quality(90).url()}
+              alt={project.title}
+              className="h-full w-full"
+              speed={0.25}
+            />
+          ) : null}
 
-                {/* Back link */}
-                <div className="absolute top-28 left-0 z-20 container">
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors tracking-wide"
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                    All Projects
-                  </Link>
-                </div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 z-10 pointer-events-none" />
 
-                {/* Title overlay */}
-                <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-20 z-20">
-                  <div className="container">
-                    <HeroTextReveal delay={0.2}>
-                      <span className="label-text text-white/50 block mb-4 tracking-[0.2em]">
-                        {categoryLabel}
-                      </span>
-                    </HeroTextReveal>
-                    <HeroTextReveal delay={0.35}>
-                      <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-4">
-                        {project.title}
-                      </h1>
-                    </HeroTextReveal>
-                    <HeroTextReveal delay={0.5}>
-                      {project.shipyard && (
-                        <p className="text-lg text-white/60 tracking-wide">
-                          {project.shipyard}{project.year ? ` \u2014 ${project.year}` : ''}
-                        </p>
-                      )}
-                    </HeroTextReveal>
-                  </div>
-                </div>
-              </>
-            }
-          />
+          {/* Back link */}
+          <div className="absolute top-28 left-0 z-20 container">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors tracking-wide"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              All Projects
+            </Link>
+          </div>
+
+          {/* Title overlay */}
+          <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-20 z-20">
+            <div className="container">
+              <HeroTextReveal delay={0.2}>
+                <span className="label-text text-white/50 block mb-4 tracking-[0.2em]">
+                  {categoryLabel}
+                </span>
+              </HeroTextReveal>
+              <HeroTextReveal delay={0.35}>
+                <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-4">
+                  {project.title}
+                </h1>
+              </HeroTextReveal>
+              <HeroTextReveal delay={0.5}>
+                {project.shipyard && (
+                  <p className="text-lg text-white/60 tracking-wide">
+                    {project.shipyard}{project.year ? ` \u2014 ${project.year}` : ''}
+                  </p>
+                )}
+              </HeroTextReveal>
+            </div>
+          </div>
         </section>
       )}
 

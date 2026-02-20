@@ -94,9 +94,11 @@ const services = [
 ]
 
 const heroImages = [
+  { id: 'hero-yt', src: '', title: 'H2 Yacht Design', subtitle: 'Showreel', youtubeId: 'EU1rw3MhYkI' },
+  { id: 'hero-scout-yt', src: '', title: 'Scout', subtitle: 'Hakvoort', youtubeId: 'edIIraSLFt4', slug: 'scout' },
   { id: 'hero-01', src: '/images/hero/hero-01.jpg', title: 'Arrow', subtitle: 'Feadship' },
+  { id: 'hero-lusail-yt', src: '', title: 'Al Lusail', subtitle: 'L\u00fcrssen', youtubeId: 'fmubKGBMYmQ', slug: 'jupiter' },
   { id: 'hero-06', src: '/images/hero/hero-06.jpg', title: 'Beach Club', subtitle: '' },
-  { id: 'hero-09', src: '/images/hero/hero-09.jpg', title: 'Al Lusail', subtitle: 'L\u00fcrssen' },
   { id: 'hero-10', src: '/images/hero/hero-10.jpg', title: 'Interior', subtitle: 'Jeff Brown' },
   { id: 'hero-13', src: '/images/hero/hero-13.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
   { id: 'hero-14', src: '/images/hero/hero-14.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
@@ -302,12 +304,13 @@ export default function Home() {
           ...featuredProjects,
           ...heroImages
             .filter((h) => !featuredProjects.some((fp: any) => fp._id === h.id))
-            .map((h) => ({
+            .map((h: any) => ({
               _id: h.id,
               title: h.title,
-              slug: { current: '' },
+              slug: { current: h.slug || '' },
               shipyard: h.subtitle,
-              imageUrl: h.src,
+              imageUrl: h.src || undefined,
+              youtubeId: h.youtubeId,
             })),
         ]}
       />

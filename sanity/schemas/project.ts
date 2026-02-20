@@ -110,6 +110,12 @@ export default defineType({
       description: 'Full project description with rich content',
     }),
     defineField({
+      name: 'heroVideoId',
+      title: 'Hero Video (YouTube ID)',
+      type: 'string',
+      description: 'YouTube video ID for hero section (e.g., "dQw4w9WgXcQ"). Replaces hero image when set.',
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main Image',
       type: 'image',

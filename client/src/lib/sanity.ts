@@ -60,6 +60,7 @@ export async function getProjectBySlug(slug: string) {
       length,
       excerpt,
       description,
+      heroVideoId,
       mainImage,
       gallery,
       status,

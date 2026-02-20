@@ -11,6 +11,7 @@ interface Slide {
   mainImage?: any
   imageUrl?: string
   videoUrl?: string
+  youtubeId?: string
 }
 
 interface HeroSlideshowProps {
@@ -46,10 +47,11 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
     goTo((currentIndex - 1 + slides.length) % slides.length)
   }, [currentIndex, slides.length, goTo])
 
-  // Auto-advance
+  // Auto-advance (longer for YouTube videos)
   useEffect(() => {
     if (slides.length <= 1) return
-    timerRef.current = setTimeout(goToNext, SLIDE_DURATION)
+    const duration = slides[currentIndex]?.youtubeId ? 15000 : SLIDE_DURATION
+    timerRef.current = setTimeout(goToNext, duration)
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current)
     }
@@ -82,8 +84,19 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
           zIndex: isCurrent ? 2 : 1,
         }}
       >
-        {/* Video or Image */}
-        {slide.videoUrl ? (
+        {/* YouTube, Video, or Image */}
+        {slide.youtubeId ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            <iframe
+              src={`https://www.youtube.com/embed/${slide.youtubeId}?autoplay=${isCurrent ? 1 : 0}&mute=1&loop=1&playlist=${slide.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="absolute w-[120%] h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
+              style={{ border: 'none' }}
+              title={slide.title}
+            />
+          </div>
+        ) : slide.videoUrl ? (
           <video
             src={slide.videoUrl}
             autoPlay
