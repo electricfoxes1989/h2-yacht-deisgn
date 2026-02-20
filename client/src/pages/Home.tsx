@@ -99,11 +99,8 @@ const heroImages = [
   { id: 'hero-01', src: '/images/hero/hero-01.jpg', title: 'Arrow', subtitle: 'Feadship' },
   { id: 'hero-lusail-yt', src: '', title: 'Al Lusail', subtitle: 'L\u00fcrssen', youtubeId: 'fmubKGBMYmQ', slug: 'jupiter' },
   { id: 'hero-06', src: '/images/hero/hero-06.jpg', title: '', subtitle: '' },
-  { id: 'hero-10', src: '/images/hero/hero-10.jpg', title: '', subtitle: '' },
   { id: 'hero-13', src: '/images/hero/hero-13.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
-  { id: 'hero-14', src: '/images/hero/hero-14.jpg', title: 'MY GO', subtitle: 'Turquoise Yachts' },
   { id: 'hero-17', src: '/images/hero/hero-17.jpg', title: '', subtitle: '' },
-  { id: 'hero-08', src: '/images/hero/hero-08.jpg', title: '', subtitle: '' },
 ]
 
 function ConceptsSlideshow({ concepts }: { concepts: any[] }) {

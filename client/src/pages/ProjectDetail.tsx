@@ -103,8 +103,12 @@ export default function ProjectDetail() {
                 src={`https://www.youtube.com/embed/${project.heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${project.heroVideoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1`}
                 allow="autoplay; encrypted-media"
                 allowFullScreen
-                className="absolute w-[140%] h-[140%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
-                style={{ border: 'none' }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0"
+                style={{
+                  border: 'none',
+                  width: 'max(177.78vh, 100vw)',
+                  height: 'max(56.25vw, 100vh)',
+                }}
                 title={project.title}
               />
             </div>
