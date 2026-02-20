@@ -320,8 +320,8 @@ export default function Home() {
             <ScaleReveal>
               <div className="relative aspect-[4/5] lg:aspect-auto overflow-hidden rounded-2xl lg:rounded-r-none bg-muted h-full">
                 <ParallaxImage
-                  src="/images/hero/hero-10.jpg"
-                  alt="Superyacht interior by H2 Yacht Design"
+                  src="/images/jonny-horsfield-model.jpg"
+                  alt="Jonny Horsfield — Owner & Creative Director of H2 Yacht Design"
                   className="h-full w-full"
                   speed={0.2}
                 />
