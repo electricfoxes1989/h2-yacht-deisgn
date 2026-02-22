@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["pnpm@10.4.1", "run", "dev"],
+      "port": 5173,
+      "env": {
+        "VITE_SANITY_PROJECT_ID": "dhren5s2",
+        "VITE_SANITY_DATASET": "production"
+      }
+    }
+  ]
+}
