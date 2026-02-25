@@ -34,7 +34,7 @@ export async function getFeaturedProjects() {
 
 export async function getAllProjects() {
   return await client.fetch(`
-    *[_type == "project"] | order(year desc) {
+    *[_type == "project"] | order(defined(year) desc, year desc, title asc) {
       _id,
       title,
       slug,
@@ -77,7 +77,7 @@ export async function getProjectBySlug(slug: string) {
 // Query projects by category
 export async function getProjectsByCategory(category: string) {
   return await client.fetch(
-    `*[_type == "project" && category == $category] | order(year desc) {
+    `*[_type == "project" && category == $category] | order(defined(year) desc, year desc, title asc) {
       _id,
       title,
       slug,

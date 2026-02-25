@@ -278,7 +278,7 @@ export default function Home() {
     .filter((p: any) => p.category === 'hotel-home')
     .slice(0, 4)
   const interiorProjects = allProjects
-    .filter((p: any) => p.designScope?.includes('interior'))
+    .filter((p: any) => p.designScope?.includes('interior') && p.category !== 'concepts')
     .slice(0, 4)
   const refitProjects = allProjects
     .filter((p: any) => p.category === 'refit')
