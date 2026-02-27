@@ -64,7 +64,7 @@ export default function UnderConstruction() {
                   href={`/projects/${project.slug.current}`}
                   className="group block"
                 >
-                  <div className="aspect-[4/3] bg-h2-light rounded-lg mb-4 img-zoom relative">
+                  <div className="aspect-[16/9] bg-h2-light rounded-lg mb-4 img-zoom relative">
                     {project.mainImage && (
                       <img
                         src={urlFor(project.mainImage).width(800).quality(85).url()}

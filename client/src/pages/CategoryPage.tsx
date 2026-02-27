@@ -87,12 +87,12 @@ export default function CategoryPage({ category, title, subtitle, description }:
                     className="group block"
                   >
                     {/* Image — clean zoom, no overlay */}
-                    <div className="img-zoom bg-h2-light overflow-hidden rounded-xl aspect-[4/3]">
+                    <div className="img-zoom bg-h2-light overflow-hidden rounded-xl aspect-[16/9]">
                       {project.mainImage && (
                         <img
                           src={urlFor(project.mainImage)
                             .width(900)
-                            .height(675)
+                            .height(506)
                             .fit('crop')
                             .quality(85)
                             .url()}

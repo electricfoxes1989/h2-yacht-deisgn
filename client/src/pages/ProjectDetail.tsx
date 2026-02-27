@@ -472,10 +472,10 @@ export default function ProjectDetail() {
                     href={`/projects/${rp.slug?.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-muted rounded-xl aspect-[4/3]">
+                    <div className="img-zoom overflow-hidden bg-muted rounded-xl aspect-[16/9]">
                       {rp.mainImage && (
                         <img
-                          src={urlFor(rp.mainImage).width(800).height(600).fit('crop').quality(85).url()}
+                          src={urlFor(rp.mainImage).width(800).height(450).fit('crop').quality(85).url()}
                           alt={rp.title}
                           className="w-full h-full object-cover block"
                         />

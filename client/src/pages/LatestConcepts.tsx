@@ -72,7 +72,7 @@ export default function LatestConcepts() {
                     href={`/projects/${concept.slug.current}`}
                     className="group block"
                   >
-                    <div className="aspect-[4/3] bg-h2-light rounded-lg mb-4 img-zoom">
+                    <div className="aspect-[16/9] bg-h2-light rounded-lg mb-4 img-zoom">
                       {concept.mainImage && (
                         <img
                           src={urlFor(concept.mainImage).width(800).quality(85).url()}

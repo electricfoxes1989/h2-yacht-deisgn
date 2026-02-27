@@ -395,12 +395,12 @@ export default function Home() {
                     href={`/projects/${project.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                    <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[16/9]">
                       {project.mainImage && (
                         <img
                           src={urlFor(project.mainImage)
                             .width(900)
-                            .height(675)
+                            .height(506)
                             .fit('crop')
                             .quality(85)
                             .url()}
@@ -462,7 +462,7 @@ export default function Home() {
                       href={`/projects/${project.slug.current}`}
                       className="group block"
                     >
-                      <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                      <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[16/9]">
                         {displayImage && (
                           <img
                             src={urlFor(displayImage)
@@ -528,12 +528,12 @@ export default function Home() {
                     href={`/projects/${project.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                    <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[16/9]">
                       {project.mainImage && (
                         <img
                           src={urlFor(project.mainImage)
                             .width(900)
-                            .height(675)
+                            .height(506)
                             .fit('crop')
                             .quality(85)
                             .url()}
@@ -610,12 +610,12 @@ export default function Home() {
                     href={`/projects/${project.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-white/5 rounded-2xl aspect-[4/3]">
+                    <div className="img-zoom overflow-hidden bg-white/5 rounded-2xl aspect-[16/9]">
                       {project.mainImage && (
                         <img
                           src={urlFor(project.mainImage)
                             .width(900)
-                            .height(675)
+                            .height(506)
                             .fit('crop')
                             .quality(85)
                             .url()}
@@ -680,12 +680,12 @@ export default function Home() {
                     href={`/projects/${project.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl aspect-[4/3]">
+                    <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl aspect-[16/9]">
                       {project.mainImage && (
                         <img
                           src={urlFor(project.mainImage)
                             .width(900)
-                            .height(675)
+                            .height(506)
                             .fit('crop')
                             .quality(85)
                             .url()}
