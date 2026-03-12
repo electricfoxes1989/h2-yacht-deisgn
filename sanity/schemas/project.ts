@@ -22,6 +22,13 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: 'alternativeNames',
+      title: 'Alternative Names',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Previous or alternative names for this yacht (e.g., former name, project name)',
+    }),
+    defineField({
       name: 'shipyard',
       title: 'Shipyard',
       type: 'string',

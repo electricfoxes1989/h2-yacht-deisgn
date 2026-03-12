@@ -282,6 +282,16 @@ export default function ProjectDetail() {
                           </span>
                         </div>
                       )}
+                      {project.alternativeNames && project.alternativeNames.length > 0 && (
+                        <div className="py-4">
+                          <span className="text-xs uppercase tracking-widest text-h2-muted block mb-1">
+                            Also Known As
+                          </span>
+                          <span className="text-base font-medium text-h2-dark">
+                            {project.alternativeNames.join(', ')}
+                          </span>
+                        </div>
+                      )}
                       {categoryLabel && (
                         <div className="py-4">
                           <span className="text-xs uppercase tracking-widest text-h2-muted block mb-1">
