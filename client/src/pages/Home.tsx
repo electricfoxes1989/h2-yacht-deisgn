@@ -69,27 +69,15 @@ function AnimatedStat({ value, label }: { value: string; label: string }) {
 const services = [
   {
     number: '01',
-    title: 'New Build',
+    title: 'Interior Design',
     description:
-      'From initial concept to final delivery, we design bespoke superyacht interiors and exteriors. Every project begins with a blank canvas and a conversation \u2014 understanding each owner\u2019s vision, lifestyle and aspirations.',
+      'Bespoke interior architecture for superyachts \u2014 from spatial planning and material selection to custom furniture and FF&E. Our interior architects and 3D visualisers create environments that reflect each owner\u2019s personality and lifestyle.',
   },
   {
     number: '02',
-    title: 'Refit',
+    title: 'Exterior Design',
     description:
-      'Transforming existing vessels with fresh design concepts, upgraded interiors, and modernised systems. With decades of refit experience, H2 built its reputation as the refit design experts.',
-  },
-  {
-    number: '03',
-    title: 'Hotel & Home',
-    description:
-      'Bringing our yacht design expertise to luxury residential and hospitality projects worldwide, including private residences and boutique hotels.',
-  },
-  {
-    number: '04',
-    title: 'Tenders & Toys',
-    description:
-      'Designing custom tenders and support vessels that complement the mother ship in style and performance, working with leading tender builders.',
+      'Complete exterior styling from profile to detail \u2014 hull lines, superstructure, and deck layouts that balance aesthetics with naval architecture. Every exterior is designed to be timeless and immediately recognisable.',
   },
 ]
 
@@ -277,9 +265,6 @@ export default function Home() {
   const hotelHomeProjects = allProjects
     .filter((p: any) => p.category === 'hotel-home')
     .slice(0, 4)
-  const interiorProjects = allProjects
-    .filter((p: any) => p.designScope?.includes('interior') && p.category !== 'concepts')
-    .slice(0, 4)
   const refitProjects = allProjects
     .filter((p: any) => p.category === 'refit')
     .slice(0, 4)
@@ -375,11 +360,11 @@ export default function Home() {
                 <div>
                   <p className="label-text mb-3">Projects</p>
                   <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
-                    Exterior Design
+                    New Build
                   </h2>
                 </div>
                 <Link
-                  href="/projects/category/exterior"
+                  href="/projects/category/new-build"
                   className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
                 >
                   View all projects
@@ -431,73 +416,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 3. Interiors — 4 projects, cream background ── */}
-      {interiorProjects.length > 0 && (
-        <section className="section-padding bg-h2-cream">
-          <div className="container">
-            <ScrollReveal>
-              <div className="flex items-end justify-between mb-12">
-                <div>
-                  <p className="label-text mb-3">Interior Design</p>
-                  <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
-                    Interiors
-                  </h2>
-                </div>
-                <Link
-                  href="/projects/category/interiors"
-                  className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
-                >
-                  View all interiors
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </ScrollReveal>
-
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" staggerDelay={0.12}>
-              {interiorProjects.map((project: any) => {
-                const displayImage = project.interiorImage || project.mainImage
-                return (
-                  <motion.div key={project._id} variants={staggerItem}>
-                    <Link
-                      href={`/projects/${project.slug.current}`}
-                      className="group block"
-                    >
-                      <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[16/9]">
-                        {displayImage && (
-                          <img
-                            src={urlFor(displayImage)
-                              .width(900)
-                              .height(675)
-                              .fit('crop')
-                              .quality(85)
-                              .url()}
-                            alt={project.title}
-                            className="w-full h-full object-cover block"
-                          />
-                        )}
-                      </div>
-                      <div className="project-card-text mt-5">
-                        <div className="accent-line mb-4" />
-                        <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
-                          {project.title}
-                        </h3>
-                        {project.shipyard && (
-                          <p className="text-sm text-h2-muted mt-1">{project.shipyard}</p>
-                        )}
-                        {project.excerpt && (
-                          <p className="text-sm text-h2-body mt-2 leading-relaxed line-clamp-2">
-                            {project.excerpt}
-                          </p>
-                        )}
-                      </div>
-                    </Link>
-                  </motion.div>
-                )
-              })}
-            </StaggerContainer>
-          </div>
-        </section>
-      )}
 
       {/* ── Refit — 4 projects ── */}
       {refitProjects.length > 0 && (
@@ -569,9 +487,9 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
             {[
-              { value: '30+', label: 'Years of Excellence' },
-              { value: '200+', label: 'Completed Projects' },
-              { value: '20+', label: 'Multi-Disciplinary Designers' },
+              { value: '2', label: 'Studios' },
+              { value: '20+', label: 'Designers' },
+              { value: '30+', label: 'Years Experience' },
             ].map((stat) => (
               <AnimatedStat key={stat.label} value={stat.value} label={stat.label} />
             ))}
