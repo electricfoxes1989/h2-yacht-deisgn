@@ -482,20 +482,10 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── Stats Bar ── */}
-      <section className="bg-[var(--h2-navy)]">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
-            {[
-              { value: '2', label: 'Studios' },
-              { value: '20+', label: 'Designers' },
-              { value: '30+', label: 'Years Experience' },
-            ].map((stat) => (
-              <AnimatedStat key={stat.label} value={stat.value} label={stat.label} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── 3. Concepts — Interactive Slideshow ── */}
+      {conceptProjects.length > 0 && (
+        <ConceptsSlideshow concepts={conceptProjects} />
+      )}
 
       {/* ── 4. In Build — 2 featured projects, side by side ── */}
       {inBuildProjects.length > 0 && (
@@ -564,12 +554,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* ── 5. Concepts — Interactive Slideshow ── */}
-      {conceptProjects.length > 0 && (
-        <ConceptsSlideshow concepts={conceptProjects} />
-      )}
-
-      {/* ── 6. Bespoke Projects — dark navy section ── */}
+      {/* ── 5. Bespoke Projects — dark navy section ── */}
       {bespokeProjects.length > 0 && (
         <section className="section-padding" style={{ backgroundColor: 'var(--h2-navy)', color: 'white' }}>
           <div className="container">
@@ -633,6 +618,21 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* ── Stats Bar ── */}
+      <section className="bg-[var(--h2-navy)]">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            {[
+              { value: '2', label: 'Studios' },
+              { value: '20+', label: 'Designers' },
+              { value: '30+', label: 'Years Experience' },
+            ].map((stat) => (
+              <AnimatedStat key={stat.label} value={stat.value} label={stat.label} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── 7. Services ── */}
       <section className="section-padding">
