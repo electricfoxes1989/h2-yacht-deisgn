@@ -17,6 +17,7 @@ import {
 interface ProjectsByCategoryProps {
   projects: any[]
   latestNews: any[]
+  latestProjectsTagged?: any[]
 }
 
 function ProjectGrid({
@@ -110,12 +111,25 @@ function ProjectGrid({
   )
 }
 
-export default function ProjectsByCategory({ projects, latestNews }: ProjectsByCategoryProps) {
+const categoryLabels: Record<string, string> = {
+  'new-build': 'New Build',
+  'in-build': 'In Build',
+  'refit': 'Refit',
+  'concepts': 'Concept',
+  'hotel-home': 'Hotel & Home',
+  'tenders': 'Tenders',
+}
+
+export default function ProjectsByCategory({ projects, latestNews, latestProjectsTagged = [] }: ProjectsByCategoryProps) {
+  // Use Sanity-tagged projects if any exist, otherwise fall back to latest 8 with images
+  const latestProjects = latestProjectsTagged.length > 0
+    ? latestProjectsTagged
+    : projects.filter((p: any) => p.mainImage).slice(0, 8)
   const newBuildProjects = projects.filter((p: any) => p.category === 'new-build').slice(0, 4)
   const refitProjects = projects.filter((p: any) => p.category === 'refit').slice(0, 4)
   const inBuildProjects = projects.filter((p: any) => p.category === 'in-build').slice(0, 2)
-  const hotelHomeProjects = projects.filter((p: any) => p.category === 'hotel-home').slice(0, 4)
-  const tenderProjects = projects.filter((p: any) => p.category === 'tenders').slice(0, 4)
+  const hotelHomeProjects = projects.filter((p: any) => p.category === 'hotel-home' && p.mainImage).slice(0, 4)
+  const tenderProjects = projects.filter((p: any) => p.category === 'tenders' && p.mainImage).slice(0, 4)
   const bespokeProjects = [...hotelHomeProjects, ...tenderProjects].slice(0, 4)
 
   return (
@@ -168,6 +182,75 @@ export default function ProjectsByCategory({ projects, latestNews }: ProjectsByC
           </div>
         </div>
       </section>
+
+      {/* Latest Projects — horizontal scroll row */}
+      {latestProjects.length > 0 && (
+        <section className="section-padding bg-white overflow-hidden">
+          <div className="container">
+            <ScrollReveal>
+              <div className="flex items-end justify-between mb-10">
+                <div>
+                  <p className="label-text mb-3">Latest</p>
+                  <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">Latest Projects</h2>
+                </div>
+                <Link
+                  href="/projects"
+                  className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-[var(--h2-dark)] transition-colors group"
+                >
+                  View all
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <div className="pl-6 sm:pl-10 lg:pl-[max(2.5rem,calc((100vw-1440px)/2+4rem))]">
+            <div className="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+              {latestProjects.map((project: any) => (
+                <Link
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
+                  className="group shrink-0 w-[320px] md:w-[380px] snap-start"
+                >
+                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                    {project.mainImage && (
+                      <img
+                        src={urlFor(project.mainImage)
+                          .width(760)
+                          .height(570)
+                          .fit('crop')
+                          .quality(85)
+                          .url()}
+                        alt={project.title}
+                        className="w-full h-full object-cover block"
+                      />
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--h2-cyan)]">
+                        {categoryLabels[project.category] || project.category}
+                      </span>
+                      {project.year && (
+                        <>
+                          <span className="text-h2-muted text-xs">&middot;</span>
+                          <span className="text-[0.65rem] text-h2-muted">{project.year}</span>
+                        </>
+                      )}
+                    </div>
+                    <h3 className="text-base font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    {project.shipyard && (
+                      <p className="text-sm text-h2-muted mt-0.5">{project.shipyard}</p>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* New Build */}
       <ProjectGrid

@@ -162,7 +162,13 @@ export default defineType({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',
-      description: 'Show in homepage slideshow',
+      description: 'Show in homepage hero slideshow',
+    }),
+    defineField({
+      name: 'showInLatest',
+      title: 'Show in Latest',
+      type: 'boolean',
+      description: 'Show in the Latest Projects row on the homepage',
       initialValue: false,
     }),
     defineField({

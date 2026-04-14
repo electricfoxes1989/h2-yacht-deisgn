@@ -93,6 +93,22 @@ export async function getProjectsByCategory(category: string) {
   )
 }
 
+export async function getLatestProjects() {
+  return await client.fetch(`
+    *[_type == "project" && showInLatest == true && defined(mainImage)] | order(defined(year) desc, year desc, title asc) {
+      _id,
+      title,
+      slug,
+      shipyard,
+      category,
+      year,
+      length,
+      excerpt,
+      mainImage
+    }
+  `)
+}
+
 // ── Team queries ──
 
 export async function getTeamMembers() {
