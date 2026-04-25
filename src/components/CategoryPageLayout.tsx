@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { urlFor } from '@/lib/sanity'
+import ProjectImage from '@/components/ProjectImage'
 import {
   ScrollReveal,
   HeroTextReveal,
@@ -65,18 +65,13 @@ export default function CategoryPageLayout({
                   >
                     {/* Image */}
                     <div className="img-zoom bg-h2-light overflow-hidden rounded-xl aspect-[16/9]">
-                      {project.mainImage && (
-                        <img
-                          src={urlFor(project.mainImage)
-                            .width(900)
-                            .height(506)
-                            .fit('crop')
-                            .quality(85)
-                            .url()}
-                          alt={project.title}
-                          className="w-full h-full object-cover block"
-                        />
-                      )}
+                      <ProjectImage
+                        mainImage={project.mainImage}
+                        imageNote={project.imageNote}
+                        isConfidential={project.isConfidential}
+                        title={project.title}
+                        category={project.category}
+                      />
                     </div>
 
                     {/* Info below image */}

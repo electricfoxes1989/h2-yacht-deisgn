@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { urlFor } from '@/lib/sanity'
+import ProjectImage from '@/components/ProjectImage'
 import { motion } from 'framer-motion'
 import {
   ScrollReveal,
@@ -75,18 +76,13 @@ function ProjectGrid({
                 className="group block"
               >
                 <div className={`img-zoom overflow-hidden ${cardBg} rounded-2xl aspect-[16/9]`}>
-                  {project.mainImage && (
-                    <img
-                      src={urlFor(project.mainImage)
-                        .width(900)
-                        .height(506)
-                        .fit('crop')
-                        .quality(85)
-                        .url()}
-                      alt={project.title}
-                      className="w-full h-full object-cover block"
-                    />
-                  )}
+                  <ProjectImage
+                    mainImage={project.mainImage}
+                    imageNote={project.imageNote}
+                    isConfidential={project.isConfidential}
+                    title={project.title}
+                    category={project.category}
+                  />
                 </div>
                 <div className="project-card-text mt-5">
                   <div className="accent-line mb-4" />
@@ -128,9 +124,12 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
   const newBuildProjects = projects.filter((p: any) => p.category === 'new-build').slice(0, 4)
   const refitProjects = projects.filter((p: any) => p.category === 'refit').slice(0, 4)
   const inBuildProjects = projects.filter((p: any) => p.category === 'in-build').slice(0, 2)
-  const hotelHomeProjects = projects.filter((p: any) => p.category === 'hotel-home' && p.mainImage).slice(0, 4)
-  const tenderProjects = projects.filter((p: any) => p.category === 'tenders' && p.mainImage).slice(0, 4)
-  const bespokeProjects = [...hotelHomeProjects, ...tenderProjects].slice(0, 4)
+  // Show projects with images first, then placeholders. Limit to 4 in bespoke section.
+  const hotelHomeProjects = projects.filter((p: any) => p.category === 'hotel-home')
+  const tenderProjects = projects.filter((p: any) => p.category === 'tenders')
+  const bespokeProjects = [...hotelHomeProjects, ...tenderProjects]
+    .sort((a, b) => (b.mainImage ? 1 : 0) - (a.mainImage ? 1 : 0))
+    .slice(0, 4)
 
   return (
     <>
@@ -213,18 +212,15 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                   className="group shrink-0 w-[320px] md:w-[380px] snap-start"
                 >
                   <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
-                    {project.mainImage && (
-                      <img
-                        src={urlFor(project.mainImage)
-                          .width(760)
-                          .height(570)
-                          .fit('crop')
-                          .quality(85)
-                          .url()}
-                        alt={project.title}
-                        className="w-full h-full object-cover block"
-                      />
-                    )}
+                    <ProjectImage
+                      mainImage={project.mainImage}
+                      imageNote={project.imageNote}
+                      isConfidential={project.isConfidential}
+                      title={project.title}
+                      category={project.category}
+                      width={760}
+                      height={570}
+                    />
                   </div>
                   <div className="mt-4">
                     <div className="flex items-center gap-2 mb-2">
@@ -310,18 +306,13 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                     className="group block"
                   >
                     <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl aspect-[16/9]">
-                      {project.mainImage && (
-                        <img
-                          src={urlFor(project.mainImage)
-                            .width(900)
-                            .height(506)
-                            .fit('crop')
-                            .quality(85)
-                            .url()}
-                          alt={project.title}
-                          className="w-full h-full object-cover block"
-                        />
-                      )}
+                      <ProjectImage
+                        mainImage={project.mainImage}
+                        imageNote={project.imageNote}
+                        isConfidential={project.isConfidential}
+                        title={project.title}
+                        category={project.category}
+                      />
                     </div>
                     <div className="project-card-text mt-5">
                       <div className="accent-line mb-4" />

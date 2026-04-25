@@ -172,6 +172,26 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'hidden',
+      title: 'Hide from public site',
+      type: 'boolean',
+      description: 'Hide this project from listings and pages (still kept in CMS)',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'imageNote',
+      title: 'Image Note',
+      type: 'string',
+      description: 'Note shown when no image is available (e.g. "Image not yet available", "Confidential project")',
+    }),
+    defineField({
+      name: 'isConfidential',
+      title: 'Confidential Project',
+      type: 'boolean',
+      description: 'Marks private residences/projects \u2014 shows a styled placeholder instead of trying to load an image',
+      initialValue: false,
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',

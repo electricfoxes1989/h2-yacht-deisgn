@@ -18,7 +18,7 @@ export function urlFor(source: any) {
 
 export async function getFeaturedProjects() {
   return await client.fetch(`
-    *[_type == "project" && featured == true] | order(order asc) {
+    *[_type == "project" && featured == true && !(hidden == true)] | order(order asc) {
       _id,
       title,
       slug,
@@ -35,7 +35,7 @@ export async function getFeaturedProjects() {
 
 export async function getAllProjects() {
   return await client.fetch(`
-    *[_type == "project"] | order(defined(year) desc, year desc, title asc) {
+    *[_type == "project" && !(hidden == true)] | order(defined(year) desc, year desc, title asc) {
       _id,
       title,
       slug,
@@ -46,6 +46,8 @@ export async function getAllProjects() {
       excerpt,
       mainImage,
       designScope,
+      imageNote,
+      isConfidential,
       "interiorImage": gallery[0]
     }
   `)
@@ -53,7 +55,7 @@ export async function getAllProjects() {
 
 export async function getProjectBySlug(slug: string) {
   return await client.fetch(
-    `*[_type == "project" && slug.current == $slug][0] {
+    `*[_type == "project" && slug.current == $slug && !(hidden == true)][0] {
       _id,
       title,
       slug,
@@ -70,7 +72,9 @@ export async function getProjectBySlug(slug: string) {
       designScope,
       exteriorDesigner,
       alternativeNames,
-      specifications
+      specifications,
+      imageNote,
+      isConfidential
     }`,
     { slug }
   )
@@ -78,7 +82,7 @@ export async function getProjectBySlug(slug: string) {
 
 export async function getProjectsByCategory(category: string) {
   return await client.fetch(
-    `*[_type == "project" && category == $category] | order(defined(year) desc, year desc, title asc) {
+    `*[_type == "project" && category == $category && !(hidden == true)] | order(defined(year) desc, year desc, title asc) {
       _id,
       title,
       slug,
@@ -87,7 +91,9 @@ export async function getProjectsByCategory(category: string) {
       year,
       length,
       excerpt,
-      mainImage
+      mainImage,
+      imageNote,
+      isConfidential
     }`,
     { category }
   )
