@@ -16,6 +16,11 @@
  */
 
 import { createClient } from '@sanity/client'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const client = createClient({
   projectId: 'dhren5s2',
@@ -37,13 +42,6 @@ const HIDE_SLUGS = [
   'fica-fria', 'element', 'atlantic-goose', 'tacanuya', 'baraka', 'philosophy',
   'serenity-ii', 'm-t-time', 'kena-marie', 'lady-carola', 'sarha', 'cocobean',
   'hh-hamad',
-]
-
-// Confidential residences — show styled placeholder, never need an image
-const CONFIDENTIAL_SLUGS = [
-  'mallorca-villa', 'north-london-pool', 'thailand-mansion',
-  'private-villa-switzerland', 'nyc-penthouse', 'private-residence',
-  'central-london-apartment', 'the-elms',
 ]
 
 // Projects that ARE on h2yachtdesign.com but missing imagery — add a note
@@ -123,6 +121,35 @@ async function patchDoc(id, set) {
   return client.patch(id).set(set).commit()
 }
 
+async function addPressArticles() {
+  const file = path.join(__dirname, 'press-articles.json')
+  if (!fs.existsSync(file)) {
+    console.log('  ⏭  No press-articles.json found, skipping')
+    return
+  }
+  const data = JSON.parse(fs.readFileSync(file, 'utf8'))
+  console.log(`\n▸ Adding press articles for ${data.length} yachts...`)
+  for (const entry of data) {
+    const doc = await getDoc(entry.yachtSlug)
+    if (!doc) {
+      console.log(`  ❌ ${entry.yachtSlug} — not found`)
+      continue
+    }
+    // Build press articles array with stable _key per article
+    const pressArticles = entry.articles.map((a, i) => ({
+      _type: 'pressArticle',
+      _key: `press-${doc._id.replace(/[^a-z0-9]/gi, '')}-${i}`,
+      title: a.title,
+      publication: a.publication,
+      url: a.url,
+      date: a.date,
+      quote: a.quote,
+    }))
+    await patchDoc(doc._id, { pressArticles })
+    console.log(`  ✅ ${doc.title} — ${pressArticles.length} article${pressArticles.length === 1 ? '' : 's'}`)
+  }
+}
+
 async function run() {
   console.log('\n══ H2 Yacht Design — Sync Content ══\n')
 
@@ -183,17 +210,7 @@ async function run() {
     }
   }
 
-  // ── 4. MARK confidential residences ──
-  console.log(`\n▸ Marking ${CONFIDENTIAL_SLUGS.length} residences as confidential...`)
-  for (const slug of CONFIDENTIAL_SLUGS) {
-    const doc = await getDoc(slug)
-    if (doc) {
-      await patchDoc(doc._id, { isConfidential: true })
-      console.log(`  ✅ ${doc.title}`)
-    }
-  }
-
-  // ── 5. ADD image notes ──
+  // ── 4. ADD image notes ──
   console.log(`\n▸ Adding image notes for ${Object.keys(IMAGE_NOTE_SLUGS).length} projects...`)
   for (const [slug, note] of Object.entries(IMAGE_NOTE_SLUGS)) {
     const doc = await getDoc(slug)
@@ -203,7 +220,7 @@ async function run() {
     }
   }
 
-  // ── 6. APPLY fact-check fixes ──
+  // ── 5. APPLY fact-check fixes ──
   console.log(`\n▸ Applying ${DATA_FIXES.length} data fixes...`)
   for (const fix of DATA_FIXES) {
     const doc = await getDoc(fix.slug)
@@ -219,7 +236,9 @@ async function run() {
     console.log(`  ✅ ${fix.label}`)
   }
 
-  // ── 7. ADD Jonny Horsfield as team member ──
+  // ── 6. ADD press articles + Jonny Horsfield as team member ──
+  await addPressArticles()
+  // ── 7. ADD Jonny Horsfield ──
   console.log('\n▸ Adding Jonny Horsfield to team...')
   const existing = await client.fetch(`*[_type=='team' && slug.current=='jonny-horsfield'][0]`)
   if (existing) {

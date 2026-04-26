@@ -192,6 +192,28 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'pressArticles',
+      title: 'Press Articles',
+      type: 'array',
+      description: 'External press coverage and media mentions for this project',
+      of: [
+        {
+          type: 'object',
+          name: 'pressArticle',
+          fields: [
+            { name: 'title', title: 'Article Title', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'publication', title: 'Publication', type: 'string', description: 'e.g. Boat International, SuperYacht Times' },
+            { name: 'url', title: 'URL', type: 'url', validation: (Rule: any) => Rule.required() },
+            { name: 'date', title: 'Date Published', type: 'date' },
+            { name: 'quote', title: 'Pull Quote', type: 'text', rows: 3, description: 'A standout quote or summary from the article' },
+          ],
+          preview: {
+            select: { title: 'title', subtitle: 'publication' },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
