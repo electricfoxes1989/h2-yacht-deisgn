@@ -121,6 +121,37 @@ async function patchDoc(id, set) {
   return client.patch(id).set(set).commit()
 }
 
+async function fetchOgImage(url) {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; H2YachtDesignBot/1.0)',
+        Accept: 'text/html,application/xhtml+xml',
+      },
+      signal: AbortSignal.timeout(10000),
+    })
+    if (!res.ok) return null
+    const html = await res.text()
+    // Match og:image, then twitter:image as fallback
+    const ogMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+      || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i)
+      || html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)
+    if (!ogMatch) return null
+    let imageUrl = ogMatch[1]
+    // Decode HTML entities
+    imageUrl = imageUrl.replace(/&amp;/g, '&').replace(/&#x2F;/g, '/').replace(/&#39;/g, "'")
+    // Resolve relative URLs
+    if (imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl
+    else if (imageUrl.startsWith('/')) {
+      const u = new URL(url)
+      imageUrl = `${u.origin}${imageUrl}`
+    }
+    return imageUrl
+  } catch (err) {
+    return null
+  }
+}
+
 async function addPressArticles() {
   const file = path.join(__dirname, 'press-articles.json')
   if (!fs.existsSync(file)) {
@@ -128,25 +159,31 @@ async function addPressArticles() {
     return
   }
   const data = JSON.parse(fs.readFileSync(file, 'utf8'))
-  console.log(`\n▸ Adding press articles for ${data.length} yachts...`)
+  console.log(`\n▸ Adding press articles for ${data.length} yachts (fetching og:images)...`)
   for (const entry of data) {
     const doc = await getDoc(entry.yachtSlug)
     if (!doc) {
       console.log(`  ❌ ${entry.yachtSlug} — not found`)
       continue
     }
-    // Build press articles array with stable _key per article
-    const pressArticles = entry.articles.map((a, i) => ({
-      _type: 'pressArticle',
-      _key: `press-${doc._id.replace(/[^a-z0-9]/gi, '')}-${i}`,
-      title: a.title,
-      publication: a.publication,
-      url: a.url,
-      date: a.date,
-      quote: a.quote,
-    }))
+    // Fetch og:image for each article in parallel
+    const pressArticles = await Promise.all(
+      entry.articles.map(async (a, i) => {
+        const imageUrl = a.imageUrl || (await fetchOgImage(a.url))
+        return {
+          _type: 'pressArticle',
+          _key: `press-${doc._id.replace(/[^a-z0-9]/gi, '')}-${i}`,
+          title: a.title,
+          publication: a.publication,
+          url: a.url,
+          date: a.date,
+          ...(imageUrl ? { imageUrl } : {}),
+        }
+      })
+    )
     await patchDoc(doc._id, { pressArticles })
-    console.log(`  ✅ ${doc.title} — ${pressArticles.length} article${pressArticles.length === 1 ? '' : 's'}`)
+    const withImg = pressArticles.filter(a => a.imageUrl).length
+    console.log(`  ✅ ${doc.title} — ${pressArticles.length} article${pressArticles.length === 1 ? '' : 's'} (${withImg} with images)`)
   }
 }
 

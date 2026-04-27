@@ -422,44 +422,63 @@ export default function ProjectDetailClient({
                 </h2>
               </div>
             </ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {project.pressArticles.map((article: any, i: number) => (
                 <ScrollReveal key={article._key || i} delay={i * 0.05}>
                   <a
                     href={article.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block bg-h2-cream border border-[var(--h2-border)] hover:border-[var(--h2-cyan)] rounded-2xl p-6 lg:p-8 transition-all duration-300 hover:shadow-md h-full"
+                    className="group block h-full"
                   >
-                    {article.publication && (
-                      <span className="label-text block mb-3 text-[var(--h2-cyan)] tracking-[0.15em]">
-                        {article.publication}
-                      </span>
-                    )}
-                    <h3 className="text-lg lg:text-xl font-medium tracking-[-0.02em] text-h2-dark mb-3 leading-snug group-hover:text-[var(--h2-cyan)] transition-colors">
-                      {article.title}
-                    </h3>
-                    {article.quote && (
-                      <p className="heading-serif text-base lg:text-lg text-h2-body italic leading-relaxed mb-4">
-                        &ldquo;{article.quote}&rdquo;
-                      </p>
-                    )}
-                    <div className="flex items-center justify-between mt-auto pt-2">
-                      {article.date && (
-                        <span className="text-xs text-h2-muted tracking-wide">
-                          {new Date(article.date).toLocaleDateString('en-GB', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                          })}
-                        </span>
+                    {/* Hero image */}
+                    <div className="img-zoom relative aspect-[16/10] overflow-hidden rounded-xl bg-h2-light mb-4">
+                      {article.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="w-full h-full object-cover block"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center"
+                          style={{
+                            background:
+                              'linear-gradient(135deg, var(--h2-navy) 0%, var(--h2-navy-light) 100%)',
+                          }}
+                        >
+                          <span className="text-white/30 heading-serif text-2xl">
+                            {article.publication || 'Press'}
+                          </span>
+                        </div>
                       )}
-                      <span className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.1em] text-[var(--h2-cyan)] group-hover:gap-2.5 transition-all">
-                        Read article
-                        <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7m10 0v10" />
-                        </svg>
-                      </span>
+                    </div>
+
+                    {/* Meta + headline */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        {article.publication && (
+                          <span className="text-[0.65rem] font-medium uppercase tracking-[0.15em] text-[var(--h2-cyan)]">
+                            {article.publication}
+                          </span>
+                        )}
+                        {article.publication && article.date && (
+                          <span className="w-1 h-1 rounded-full bg-h2-muted" />
+                        )}
+                        {article.date && (
+                          <span className="text-[0.65rem] uppercase tracking-[0.1em] text-h2-muted">
+                            {new Date(article.date).toLocaleDateString('en-GB', {
+                              month: 'short',
+                              year: 'numeric',
+                            })}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-base lg:text-lg font-medium tracking-[-0.02em] text-h2-dark leading-snug group-hover:text-[var(--h2-cyan)] transition-colors">
+                        {article.title}
+                      </h3>
                     </div>
                   </a>
                 </ScrollReveal>

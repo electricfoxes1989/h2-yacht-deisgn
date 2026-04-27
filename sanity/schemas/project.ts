@@ -201,11 +201,11 @@ export default defineType({
           type: 'object',
           name: 'pressArticle',
           fields: [
-            { name: 'title', title: 'Article Title', type: 'string', validation: (Rule: any) => Rule.required() },
+            { name: 'title', title: 'Article Headline', type: 'string', validation: (Rule: any) => Rule.required() },
             { name: 'publication', title: 'Publication', type: 'string', description: 'e.g. Boat International, SuperYacht Times' },
             { name: 'url', title: 'URL', type: 'url', validation: (Rule: any) => Rule.required() },
             { name: 'date', title: 'Date Published', type: 'date' },
-            { name: 'quote', title: 'Pull Quote', type: 'text', rows: 3, description: 'A standout quote or summary from the article' },
+            { name: 'imageUrl', title: 'Hero Image URL', type: 'url', description: 'Article hero image (og:image). Auto-pulled by sync script.' },
           ],
           preview: {
             select: { title: 'title', subtitle: 'publication' },

@@ -74,7 +74,8 @@ export async function getProjectBySlug(slug: string) {
       alternativeNames,
       specifications,
       imageNote,
-      isConfidential
+      isConfidential,
+      pressArticles
     }`,
     { slug }
   )
