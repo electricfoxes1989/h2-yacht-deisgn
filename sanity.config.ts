@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'H2 Yacht Design',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'dhren5s2',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'is7wt6ok',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
 
   plugins: [structureTool(), visionTool()],

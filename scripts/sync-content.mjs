@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const client = createClient({
-  projectId: 'dhren5s2',
+  projectId: 'is7wt6ok',
   dataset: 'production',
   useCdn: false,
   apiVersion: '2024-01-01',
