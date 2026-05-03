@@ -301,9 +301,9 @@
   .heading-serif {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-style: italic;
-    letter-spacing: 0;
-    line-height: 1.15;
+    font-style: normal;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
   }
 
   /* Label / eyebrow text */
@@ -499,5 +499,173 @@
   }
   .animate-scale-in {
     animation: scaleIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* ─────────────────────────────────────────────
+     Design accents — visual rhythm & brand motifs
+     ───────────────────────────────────────────── */
+
+  /* Eyebrow with leading line — for section headings */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--h2-cyan);
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background-color: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Section number badge — for stepped/numbered sections */
+  .section-num {
+    font-family: var(--font-serif);
+    font-size: 0.875rem;
+    color: var(--h2-cyan);
+    letter-spacing: 0.05em;
+    display: inline-block;
+  }
+
+  /* Subtle horizontal rule with center diamond */
+  .rule-diamond {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--h2-border);
+  }
+  .rule-diamond::before,
+  .rule-diamond::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: currentColor;
+  }
+  .rule-diamond::after {
+    background-color: currentColor;
+  }
+  .rule-diamond > span {
+    width: 6px;
+    height: 6px;
+    background-color: var(--h2-cyan);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* Vertical hairline divider (for desktop col separators) */
+  .hairline-v {
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--h2-border) 20%,
+      var(--h2-border) 80%,
+      transparent
+    );
+  }
+
+  /* Corner brackets — luxury frame around imagery */
+  .corner-frame {
+    position: relative;
+  }
+  .corner-frame::before,
+  .corner-frame::after {
+    content: '';
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--h2-cyan);
+    pointer-events: none;
+    transition: all 0.4s ease;
+  }
+  .corner-frame::before {
+    top: -0.5rem;
+    left: -0.5rem;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .corner-frame::after {
+    bottom: -0.5rem;
+    right: -0.5rem;
+    border-left: 0;
+    border-top: 0;
+  }
+  .corner-frame:hover::before {
+    top: -0.75rem;
+    left: -0.75rem;
+  }
+  .corner-frame:hover::after {
+    bottom: -0.75rem;
+    right: -0.75rem;
+  }
+
+  /* Numbered list marker — for process steps */
+  .step-num {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--h2-cyan);
+    opacity: 0.4;
+    display: inline-block;
+    min-width: 2.5rem;
+  }
+
+  /* Subtle background patterns */
+  .bg-pattern-grid {
+    background-image:
+      linear-gradient(to right, rgba(20, 35, 49, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(20, 35, 49, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-pattern-radial {
+    background-image: radial-gradient(
+      ellipse at 20% 0%,
+      rgba(19, 167, 227, 0.06) 0%,
+      transparent 60%
+    );
+  }
+
+  /* Cyan accent dot — brand motif */
+  .accent-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--h2-cyan);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.5rem;
+    transform: translateY(-2px);
+  }
+
+  /* Stat block — for animated counters */
+  .stat-block {
+    position: relative;
+    padding: 1.5rem 1rem;
+  }
+  .stat-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 1px;
+    background-color: var(--h2-cyan);
+  }
+
+  /* Subtle scroll-down arrow indicator */
+  @keyframes scrollHint {
+    0%, 100% { transform: translateY(0); opacity: 0.5; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+  .scroll-hint {
+    animation: scrollHint 2s ease-in-out infinite;
   }
 }

@@ -56,7 +56,7 @@ function ProjectGrid({
         <ScrollReveal>
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="label-text mb-3" style={labelColor}>{label}</p>
+              <p className="eyebrow mb-4" style={labelColor}>{label}</p>
               <h2 className={`heading-serif text-3xl md:text-4xl lg:text-5xl ${dark ? 'text-white' : ''}`}>
                 {title}
               </h2>
