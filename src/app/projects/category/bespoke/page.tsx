@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { getProjectsByCategory } from '@/lib/sanity'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const revalidate = 60
@@ -9,7 +7,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Bespoke Projects | H2 Yacht Design',
   description:
-    'Bringing our yacht design expertise beyond the water — luxury residential interiors, boutique hospitality projects, and custom tenders.',
+    'Bringing our yacht design expertise beyond the water — private homes, boutique hospitality and custom tenders.',
 }
 
 export default async function BespokePage() {
@@ -18,18 +16,17 @@ export default async function BespokePage() {
     getProjectsByCategory('tenders'),
   ])
 
-  const projects = [...hotelHome, ...tenders]
+  // Sort: projects with images first, then placeholders
+  const projects = [...hotelHome, ...tenders].sort(
+    (a, b) => (b.mainImage ? 1 : 0) - (a.mainImage ? 1 : 0)
+  )
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-      <CategoryPageLayout
-        projects={projects}
-        title="Bespoke Projects"
-        subtitle="Hotel &amp; Home &middot; Tenders"
-        description="Bringing our yacht design expertise beyond the water — luxury residential interiors, boutique hospitality projects, and custom tenders."
-      />
-      <Footer />
-    </div>
+    <CategoryPageLayout
+      projects={projects}
+      title="Bespoke Projects"
+      subtitle="Hotel &amp; Home &middot; Tenders &amp; Toys"
+      description="Bringing our yacht design expertise beyond the water — private homes, boutique hospitality and custom tenders."
+    />
   )
 }

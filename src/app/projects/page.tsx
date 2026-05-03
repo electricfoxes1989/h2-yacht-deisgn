@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { getAllProjects } from '@/lib/sanity'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import ProjectsGrid from './ProjectsGrid'
 
 export const revalidate = 60
@@ -16,11 +14,9 @@ export default async function ProjectsPage() {
   const projects = await getAllProjects()
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-
+    <div className="bg-white">
       {/* Hero */}
-      <section className="section-dark pt-40 pb-20">
+      <section className="section-dark pt-40 pb-20 lg:pt-48 lg:pb-28">
         <div className="container">
           <p className="label-text mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Portfolio
@@ -37,8 +33,6 @@ export default async function ProjectsPage() {
       </section>
 
       <ProjectsGrid projects={projects} />
-
-      <Footer />
     </div>
   )
 }

@@ -8,18 +8,22 @@ const categories = [
   { label: 'All', value: 'All' },
   { label: 'New Build', value: 'new-build' },
   { label: 'In Build', value: 'in-build' },
-  { label: 'Concepts', value: 'concepts' },
   { label: 'Refit', value: 'refit' },
-  { label: 'Hotel & Home', value: 'hotel-home' },
+  { label: 'Concepts', value: 'concepts' },
+  { label: 'Bespoke', value: 'bespoke' },
   { label: 'Tenders', value: 'tenders' },
 ]
 
 export default function ProjectsGrid({ projects }: { projects: any[] }) {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
-  const filteredProjects = projects.filter(
-    (p: any) => selectedCategory === 'All' || p.category === selectedCategory
-  )
+  const filteredProjects = projects.filter((p: any) => {
+    if (selectedCategory === 'All') return true
+    if (selectedCategory === 'bespoke') {
+      return p.category === 'hotel-home' || p.category === 'tenders'
+    }
+    return p.category === selectedCategory
+  })
 
   const selectedLabel = categories.find(c => c.value === selectedCategory)?.label || ''
 

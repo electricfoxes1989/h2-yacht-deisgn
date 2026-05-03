@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllProjects, urlFor } from '@/lib/sanity'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export const revalidate = 60
 
@@ -23,7 +21,6 @@ export default async function UnderConstructionPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero */}
       <section className="pt-32 pb-16">
@@ -81,7 +78,6 @@ export default async function UnderConstructionPage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

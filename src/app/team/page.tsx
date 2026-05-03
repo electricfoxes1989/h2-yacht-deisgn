@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTeamMembers, urlFor } from '@/lib/sanity'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import { ArrowRight } from 'lucide-react'
 
 export const revalidate = 60
@@ -18,7 +16,6 @@ export default async function TeamPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero */}
       <section className="section-dark pt-40 pb-24">
@@ -140,7 +137,6 @@ export default async function TeamPage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

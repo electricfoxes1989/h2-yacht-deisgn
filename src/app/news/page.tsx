@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllNews, urlFor } from '@/lib/sanity'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 export const revalidate = 60
 
@@ -28,7 +26,6 @@ export default async function NewsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero */}
       <section className="section-dark pt-40 pb-20">
@@ -203,7 +200,6 @@ export default async function NewsPage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

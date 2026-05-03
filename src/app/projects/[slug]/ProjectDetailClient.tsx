@@ -12,8 +12,6 @@ import {
   ScaleReveal,
 } from '@/components/animations'
 import { motion } from 'framer-motion'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 
 const categoryLabels: Record<string, string> = {
   'new-build': 'New Build',
@@ -51,7 +49,6 @@ export default function ProjectDetailClient({
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero -- YouTube Video or Parallax Image */}
       {(project.heroVideoId || project.mainImage) && (
@@ -569,7 +566,6 @@ export default function ProjectDetailClient({
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }
