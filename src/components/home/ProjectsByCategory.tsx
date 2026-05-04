@@ -276,14 +276,20 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
         dark
       />
 
-      {/* Bespoke Projects */}
-      {bespokeProjects.length > 0 && (
-        <section className="section-padding" style={{ backgroundColor: 'var(--h2-navy)', color: 'white' }}>
+      {/* Bespoke Projects — Residential + Tenders rows */}
+      {(hotelHomeProjects.length > 0 || tenderProjects.length > 0) && (
+        <section
+          className="section-padding"
+          style={{ backgroundColor: 'var(--h2-navy)', color: 'white' }}
+        >
           <div className="container">
+            {/* Section header */}
             <ScrollReveal>
-              <div className="flex items-end justify-between mb-12">
+              <div className="flex items-end justify-between mb-16">
                 <div>
-                  <p className="label-text mb-3" style={{ color: 'rgba(255,255,255,0.7)' }}>Hotel &amp; Home &middot; Tenders</p>
+                  <p className="eyebrow mb-4" style={{ color: 'var(--h2-cyan)' }}>
+                    Beyond the Water
+                  </p>
                   <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-white">
                     Bespoke Projects
                   </h2>
@@ -298,40 +304,128 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
               </div>
             </ScrollReveal>
 
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" staggerDelay={0.12}>
-              {bespokeProjects.map((project: any) => (
-                <motion.div key={project._id} variants={staggerItem}>
-                  <Link
-                    href={`/projects/${project.slug.current}`}
-                    className="group block"
-                  >
-                    <div className="img-zoom overflow-hidden bg-white/10 rounded-2xl aspect-[16/9]">
-                      <ProjectImage
-                        mainImage={project.mainImage}
-                        imageNote={project.imageNote}
-                        isConfidential={project.isConfidential}
-                        title={project.title}
-                        category={project.category}
-                      />
-                    </div>
-                    <div className="project-card-text mt-5">
-                      <div className="accent-line mb-4" />
-                      <h3 className="text-lg font-semibold tracking-[-0.02em] text-white group-hover:text-white/80 transition-colors duration-300">
-                        {project.title}
+            {/* Residential row */}
+            {hotelHomeProjects.length > 0 && (
+              <div className="mb-20">
+                <ScrollReveal>
+                  <div className="flex items-baseline justify-between mb-8">
+                    <div className="flex items-baseline gap-4">
+                      <span className="section-num">01.</span>
+                      <h3 className="heading-serif text-xl md:text-2xl text-white">
+                        Residential &amp; Hospitality
                       </h3>
-                      <p className="text-sm text-white/50 mt-1">
-                        {project.category === 'hotel-home' ? 'Hotel & Home' : project.category === 'tenders' ? 'Tenders' : project.shipyard}
-                      </p>
-                      {project.excerpt && (
-                        <p className="text-sm text-white/40 mt-2 leading-relaxed line-clamp-2">
-                          {project.excerpt}
-                        </p>
-                      )}
                     </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </StaggerContainer>
+                    <span className="text-xs uppercase tracking-[0.15em] text-white/40">
+                      {hotelHomeProjects.length} project{hotelHomeProjects.length === 1 ? '' : 's'}
+                    </span>
+                  </div>
+                </ScrollReveal>
+
+                <StaggerContainer
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
+                  staggerDelay={0.08}
+                >
+                  {hotelHomeProjects.slice(0, 4).map((project: any) => (
+                    <motion.div key={project._id} variants={staggerItem}>
+                      <Link
+                        href={`/projects/${project.slug.current}`}
+                        className="group block"
+                      >
+                        <div className="img-zoom overflow-hidden bg-white/5 rounded-xl aspect-[4/5]">
+                          <ProjectImage
+                            mainImage={project.mainImage}
+                            imageNote={project.imageNote}
+                            isConfidential={project.isConfidential}
+                            title={project.title}
+                            category={project.category}
+                            width={520}
+                            height={650}
+                          />
+                        </div>
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium tracking-[-0.01em] text-white group-hover:text-[var(--h2-cyan)] transition-colors duration-300 leading-snug">
+                            {project.title}
+                          </h4>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </StaggerContainer>
+              </div>
+            )}
+
+            {/* Hairline divider */}
+            {hotelHomeProjects.length > 0 && tenderProjects.length > 0 && (
+              <div className="h-px bg-white/10 mb-20" />
+            )}
+
+            {/* Tenders row */}
+            {tenderProjects.length > 0 && (
+              <div>
+                <ScrollReveal>
+                  <div className="flex items-baseline justify-between mb-8">
+                    <div className="flex items-baseline gap-4">
+                      <span className="section-num">
+                        {hotelHomeProjects.length > 0 ? '02.' : '01.'}
+                      </span>
+                      <h3 className="heading-serif text-xl md:text-2xl text-white">
+                        Tenders &amp; Toys
+                      </h3>
+                    </div>
+                    <span className="text-xs uppercase tracking-[0.15em] text-white/40">
+                      {tenderProjects.length} project{tenderProjects.length === 1 ? '' : 's'}
+                    </span>
+                  </div>
+                </ScrollReveal>
+
+                <StaggerContainer
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
+                  staggerDelay={0.08}
+                >
+                  {tenderProjects.slice(0, 4).map((project: any) => (
+                    <motion.div key={project._id} variants={staggerItem}>
+                      <Link
+                        href={`/projects/${project.slug.current}`}
+                        className="group block"
+                      >
+                        <div className="img-zoom overflow-hidden bg-white/5 rounded-xl aspect-[4/5]">
+                          <ProjectImage
+                            mainImage={project.mainImage}
+                            imageNote={project.imageNote}
+                            isConfidential={project.isConfidential}
+                            title={project.title}
+                            category={project.category}
+                            width={520}
+                            height={650}
+                          />
+                        </div>
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium tracking-[-0.01em] text-white group-hover:text-[var(--h2-cyan)] transition-colors duration-300 leading-snug">
+                            {project.title}
+                          </h4>
+                          {project.shipyard && (
+                            <p className="text-xs text-white/40 mt-1">
+                              {project.shipyard}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </StaggerContainer>
+              </div>
+            )}
+
+            {/* Mobile-only "View all" */}
+            <div className="mt-12 md:hidden text-center">
+              <Link
+                href="/projects/category/bespoke"
+                className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors group"
+              >
+                View all bespoke projects
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </section>
       )}
