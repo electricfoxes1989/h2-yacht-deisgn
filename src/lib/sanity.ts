@@ -100,6 +100,42 @@ export async function getProjectsByCategory(category: string) {
   )
 }
 
+/**
+ * Aggregate press articles across all visible projects, newest first.
+ * Each entry includes the parent yacht's title and slug for linking back.
+ */
+export async function getAllPressArticles(limit: number = 6) {
+  return await client.fetch(
+    `*[_type == "project" && !(hidden == true) && defined(pressArticles)] {
+      title,
+      slug,
+      "articles": pressArticles[]{
+        _key,
+        title,
+        publication,
+        url,
+        date,
+        imageUrl
+      }
+    }[]{
+      "yachtTitle": title,
+      "yachtSlug": slug.current,
+      articles
+    }`
+  ).then((projects: any[]) => {
+    // Flatten + sort by date desc + take top N
+    const all: any[] = []
+    for (const p of projects) {
+      for (const a of p.articles || []) {
+        all.push({ ...a, yachtTitle: p.yachtTitle, yachtSlug: p.yachtSlug })
+      }
+    }
+    return all
+      .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+      .slice(0, limit)
+  })
+}
+
 export async function getLatestProjects() {
   return await client.fetch(`
     *[_type == "project" && showInLatest == true && defined(mainImage)] | order(defined(year) desc, year desc, title asc) {

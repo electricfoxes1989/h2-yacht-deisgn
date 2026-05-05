@@ -19,6 +19,7 @@ interface ProjectsByCategoryProps {
   projects: any[]
   latestNews: any[]
   latestProjectsTagged?: any[]
+  pressArticles?: any[]
 }
 
 function ProjectGrid({
@@ -116,7 +117,7 @@ const categoryLabels: Record<string, string> = {
   'tenders': 'Tenders',
 }
 
-export default function ProjectsByCategory({ projects, latestNews, latestProjectsTagged = [] }: ProjectsByCategoryProps) {
+export default function ProjectsByCategory({ projects, latestNews, latestProjectsTagged = [], pressArticles = [] }: ProjectsByCategoryProps) {
   // Use Sanity-tagged projects if any exist, otherwise fall back to latest 8 with images
   const latestProjects = latestProjectsTagged.length > 0
     ? latestProjectsTagged
@@ -220,7 +221,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                   href={`/projects/${project.slug.current}`}
                   className="group shrink-0 w-[320px] md:w-[380px] snap-start"
                 >
-                  <div className="img-zoom overflow-hidden bg-muted rounded-2xl aspect-[4/3]">
+                  <div className="img-zoom overflow-hidden bg-h2-light rounded-2xl flex items-center justify-center" style={{ minHeight: '240px', maxHeight: '360px' }}>
                     <ProjectImage
                       mainImage={project.mainImage}
                       imageNote={project.imageNote}
@@ -228,7 +229,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                       title={project.title}
                       category={project.category}
                       width={760}
-                      height={570}
+                      fit="contain"
                     />
                   </div>
                   <div className="mt-4">
@@ -284,6 +285,101 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
         linkText="View all"
         dark
       />
+
+      {/* In the Press — aggregated press articles across all projects */}
+      {pressArticles.length > 0 && (
+        <section className="section-padding bg-h2-light">
+          <div className="container">
+            <ScrollReveal>
+              <div className="flex items-end justify-between mb-12">
+                <div>
+                  <p className="eyebrow mb-4">Press &amp; Media</p>
+                  <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-navy">
+                    In the Press
+                  </h2>
+                </div>
+                <Link
+                  href="/news"
+                  className="hidden md:inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-h2-navy transition-colors group"
+                >
+                  All press
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            <StaggerContainer
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6"
+              staggerDelay={0.08}
+            >
+              {pressArticles.map((article: any) => (
+                <motion.div key={article._key || article.url} variants={staggerItem}>
+                  <a
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block h-full"
+                  >
+                    <div className="img-zoom relative aspect-[16/10] overflow-hidden rounded-xl bg-white mb-4">
+                      {article.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="w-full h-full object-cover block"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center"
+                          style={{
+                            background:
+                              'linear-gradient(135deg, var(--h2-navy) 0%, var(--h2-navy-light) 100%)',
+                          }}
+                        >
+                          <span className="text-white/40 heading-serif text-2xl">
+                            {article.publication || 'Press'}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        {article.publication && (
+                          <span className="text-[0.65rem] font-medium uppercase tracking-[0.15em] text-[var(--h2-cyan)]">
+                            {article.publication}
+                          </span>
+                        )}
+                        {article.publication && article.yachtTitle && (
+                          <span className="w-1 h-1 rounded-full bg-h2-muted" />
+                        )}
+                        {article.yachtTitle && (
+                          <span className="text-[0.65rem] uppercase tracking-[0.1em] text-h2-muted">
+                            {article.yachtTitle}
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-base lg:text-lg font-medium tracking-[-0.02em] text-h2-navy leading-snug group-hover:text-[var(--h2-cyan)] transition-colors">
+                        {article.title}
+                      </h3>
+                    </div>
+                  </a>
+                </motion.div>
+              ))}
+            </StaggerContainer>
+
+            <div className="mt-10 md:hidden text-center">
+              <Link
+                href="/news"
+                className="inline-flex items-center gap-2 text-sm text-[var(--h2-cyan)] hover:text-h2-navy transition-colors group"
+              >
+                All press
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Bespoke Projects — single mixed row */}
       {bespokeProjects.length > 0 && (

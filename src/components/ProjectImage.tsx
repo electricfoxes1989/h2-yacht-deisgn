@@ -10,6 +10,11 @@ interface ProjectImageProps {
   height?: number
   className?: string
   sizes?: string
+  /**
+   * 'cover' (default) — crop to fill the container.
+   * 'contain' — letterbox; show the whole image without cropping.
+   */
+  fit?: 'cover' | 'contain'
 }
 
 /**
@@ -30,14 +35,20 @@ export default function ProjectImage({
   height = 506,
   className = '',
   sizes,
+  fit = 'cover',
 }: ProjectImageProps) {
   if (mainImage) {
-    const src = urlFor(mainImage).width(width).height(height).fit('crop').quality(85).url()
+    // For cover: crop to exact dimensions. For contain: only constrain width
+    // and let Sanity preserve native aspect ratio.
+    const builder = fit === 'cover'
+      ? urlFor(mainImage).width(width).height(height).fit('crop').quality(85)
+      : urlFor(mainImage).width(width).quality(85)
+    const objectClass = fit === 'cover' ? 'object-cover' : 'object-contain'
     return (
       <img
-        src={src}
+        src={builder.url()}
         alt={title}
-        className={`w-full h-full object-cover block ${className}`}
+        className={`w-full h-full ${objectClass} block ${className}`}
         sizes={sizes}
       />
     )
