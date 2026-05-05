@@ -440,10 +440,47 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
 
             <ScrollReveal direction="right" delay={0.2}>
               <div>
-                <div className="overflow-hidden rounded-2xl mb-8 bg-[var(--h2-navy)] flex items-center justify-center" style={{ aspectRatio: '16/10' }}>
-                  <div className="text-center px-8">
-                    <p className="heading-serif text-3xl md:text-4xl text-white mb-2">Nice</p>
-                    <p className="text-sm text-white/50 uppercase tracking-[0.15em]">French Riviera</p>
+                <div
+                  className="relative overflow-hidden rounded-2xl mb-8 flex items-center justify-center"
+                  style={{
+                    aspectRatio: '16/10',
+                    background:
+                      'linear-gradient(135deg, var(--h2-navy) 0%, var(--h2-navy-light) 50%, #1e4565 100%)',
+                  }}
+                >
+                  {/* Subtle Mediterranean gradient ribbon */}
+                  <div
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 70% 30%, rgba(19, 167, 227, 0.25) 0%, transparent 60%)',
+                    }}
+                  />
+                  {/* Decorative horizon line */}
+                  <div
+                    className="absolute left-0 right-0"
+                    style={{
+                      top: '60%',
+                      height: '1px',
+                      background:
+                        'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.15) 70%, transparent 100%)',
+                    }}
+                  />
+
+                  <div className="relative text-center px-8 z-10">
+                    <span className="block text-[0.65rem] font-medium uppercase tracking-[0.25em] text-[var(--h2-cyan)] mb-3">
+                      Côte d&rsquo;Azur
+                    </span>
+                    <p className="heading-serif text-4xl md:text-5xl lg:text-6xl text-white mb-3 leading-none">
+                      Nice
+                    </p>
+                    <div className="flex items-center justify-center gap-3 mt-4">
+                      <span className="block w-6 h-px bg-white/30" />
+                      <span className="text-[0.7rem] uppercase tracking-[0.2em] text-white/60">
+                        Mediterranean Studio
+                      </span>
+                      <span className="block w-6 h-px bg-white/30" />
+                    </div>
                   </div>
                 </div>
                 <h3 className="text-xl font-medium tracking-[-0.03em] text-h2-dark mb-2">
