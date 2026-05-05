@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getTeamMembers, urlFor } from '@/lib/sanity'
 import { ArrowRight } from 'lucide-react'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema, personSchema } from '@/lib/structured-data'
 
 export const revalidate = 60
 
@@ -14,8 +16,27 @@ export const metadata: Metadata = {
 export default async function TeamPage() {
   const team = await getTeamMembers()
 
+  // Person schema for each team member with bio text
+  const personSchemas = team
+    .filter((m: any) => m?.name)
+    .map((m: any) => {
+      // Extract plain text from any portable-text bio
+      const bioText = Array.isArray(m.bio)
+        ? m.bio.map((b: any) => b.children?.map((c: any) => c.text).join(' ')).join(' ')
+        : typeof m.bio === 'string' ? m.bio : undefined
+      const image = m.image ? urlFor(m.image).width(800).url() : undefined
+      return personSchema({ name: m.name, role: m.role, bio: bioText, image })
+    })
+
+  const breadcrumbs = breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+    { name: 'Team', url: '/team' },
+  ])
+
   return (
     <div className="min-h-screen bg-white">
+      <JsonLd data={[...personSchemas, breadcrumbs]} />
 
       {/* Hero */}
       <section className="section-dark pt-40 pb-24">

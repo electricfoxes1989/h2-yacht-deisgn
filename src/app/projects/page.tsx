@@ -1,20 +1,34 @@
 import type { Metadata } from 'next'
 import { getAllProjects } from '@/lib/sanity'
 import ProjectsGrid from './ProjectsGrid'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema } from '@/lib/structured-data'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Projects | H2 Yacht Design',
+  title: 'Projects — Superyachts, Refits & Concepts',
   description:
-    'Three decades of superyacht interiors, new builds, refits, and bespoke residential projects — each one a singular expression of craft and vision.',
+    'Three decades of superyacht interiors, new builds, refits, and bespoke residential projects designed by H2 Yacht Design. Browse 90+ yachts including Scout (Hakvoort), Arrow (Feadship), Al Lusail (Lürssen), Maryah (Elefsis), and more.',
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    title: 'Projects — H2 Yacht Design',
+    description: '90+ superyachts, refits, concepts and residential projects.',
+    url: '/projects',
+  },
 }
+
+const breadcrumbs = breadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'Projects', url: '/projects' },
+])
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects()
 
   return (
     <div className="bg-white">
+      <JsonLd data={breadcrumbs} />
       {/* Hero */}
       <section className="section-dark pt-40 pb-20 lg:pt-48 lg:pb-28">
         <div className="container">

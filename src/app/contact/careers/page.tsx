@@ -1,11 +1,26 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
-  title: 'Careers',
-  description: 'Join the H2 Yacht Design team. Open positions in London and Nice.',
+  title: 'Careers — Join the Studio',
+  description:
+    'Open positions at H2 Yacht Design — superyacht interior and exterior designers, junior and senior roles based in London, Nice, and Bath.',
+  alternates: { canonical: '/contact/careers' },
+  openGraph: {
+    title: 'Careers — H2 Yacht Design',
+    description: 'Join an award-winning yacht design studio.',
+    url: '/contact/careers',
+  },
 }
+
+const breadcrumbs = breadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'Contact', url: '/contact' },
+  { name: 'Careers', url: '/contact/careers' },
+])
 
 
 
@@ -32,6 +47,7 @@ const positions = [
 export default function Careers() {
   return (
     <div className="min-h-screen bg-white">
+      <JsonLd data={breadcrumbs} />
 
       {/* Hero */}
       <section className="section-dark pt-40 pb-24">

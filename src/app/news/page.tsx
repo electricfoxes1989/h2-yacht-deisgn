@@ -1,14 +1,27 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllNews, urlFor } from '@/lib/sanity'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema } from '@/lib/structured-data'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'News | H2 Yacht Design',
+  title: 'News & Press',
   description:
-    'Latest press, features and updates from the H2 Yacht Design studio.',
+    'Latest press features, project deliveries, awards and news from H2 Yacht Design — covering Boat International, Robb Report, SuperYacht Times and more.',
+  alternates: { canonical: '/news' },
+  openGraph: {
+    title: 'News & Press — H2 Yacht Design',
+    description: 'Press features and studio updates from H2 Yacht Design.',
+    url: '/news',
+  },
 }
+
+const breadcrumbs = breadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'News', url: '/news' },
+])
 
 function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('en-GB', {
@@ -26,6 +39,7 @@ export default async function NewsPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <JsonLd data={breadcrumbs} />
 
       {/* Hero */}
       <section className="section-dark pt-40 pb-20">

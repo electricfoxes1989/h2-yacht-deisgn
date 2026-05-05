@@ -1,0 +1,12 @@
+/**
+ * Renders one or more JSON-LD schemas as a single inline script tag.
+ * Server-component safe.
+ */
+export default function JsonLd({ data }: { data: object | object[] }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  )
+}
