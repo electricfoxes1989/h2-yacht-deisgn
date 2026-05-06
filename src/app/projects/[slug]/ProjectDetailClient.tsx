@@ -438,6 +438,15 @@ export default function ProjectDetailClient({
                           className="w-full h-full object-cover block"
                           loading="lazy"
                         />
+                      ) : project.mainImage ? (
+                        // Fallback: use this yacht's main image
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={urlFor(project.mainImage).width(900).height(563).fit('crop').quality(85).url()}
+                          alt={article.title}
+                          className="w-full h-full object-cover block"
+                          loading="lazy"
+                        />
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center"

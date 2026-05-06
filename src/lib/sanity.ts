@@ -109,6 +109,7 @@ export async function getAllPressArticles(limit: number = 6) {
     `*[_type == "project" && !(hidden == true) && defined(pressArticles)] {
       title,
       slug,
+      mainImage,
       "articles": pressArticles[]{
         _key,
         title,
@@ -120,14 +121,21 @@ export async function getAllPressArticles(limit: number = 6) {
     }[]{
       "yachtTitle": title,
       "yachtSlug": slug.current,
+      "yachtImage": mainImage,
       articles
     }`
   ).then((projects: any[]) => {
-    // Flatten + sort by date desc + take top N
+    // Flatten + sort by date desc + take top N. If an article has no
+    // imageUrl (publication blocks bots), fall back to the yacht's mainImage.
     const all: any[] = []
     for (const p of projects) {
       for (const a of p.articles || []) {
-        all.push({ ...a, yachtTitle: p.yachtTitle, yachtSlug: p.yachtSlug })
+        all.push({
+          ...a,
+          yachtTitle: p.yachtTitle,
+          yachtSlug: p.yachtSlug,
+          yachtImage: p.yachtImage,
+        })
       }
     }
     return all

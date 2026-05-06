@@ -330,6 +330,15 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                           className="w-full h-full object-cover block"
                           loading="lazy"
                         />
+                      ) : article.yachtImage ? (
+                        // Fallback: use the yacht's main image when article hero isn't fetchable
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={urlFor(article.yachtImage).width(900).height(563).fit('crop').quality(85).url()}
+                          alt={article.title}
+                          className="w-full h-full object-cover block"
+                          loading="lazy"
+                        />
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center"
