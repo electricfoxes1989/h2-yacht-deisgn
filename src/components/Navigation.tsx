@@ -103,13 +103,13 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 h-24 transition-all duration-500 ${
           showDark
             ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)]'
             : 'bg-transparent'
         }`}
       >
-        <div className="container h-full">
+        <div className="h-full px-6 sm:px-10 lg:px-16 xl:px-20 max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <Link
@@ -269,7 +269,7 @@ export default function Navigation() {
           }`}
           style={{ backgroundColor: 'var(--h2-navy)' }}
         >
-          <div className="h-20 shrink-0" />
+          <div className="h-24 shrink-0" />
 
           <div className="flex-1 flex flex-col justify-center px-8 overflow-y-auto">
             <div className="flex flex-col gap-0">

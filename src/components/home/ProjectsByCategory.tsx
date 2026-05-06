@@ -213,7 +213,8 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
             </ScrollReveal>
           </div>
 
-          <div className="pl-6 sm:pl-10 lg:pl-[max(2.5rem,calc((100vw-1440px)/2+4rem))]">
+          {/* Same horizontal padding as .container so cards line up with title */}
+          <div className="pl-6 sm:pl-10 lg:pl-[max(4rem,calc((100vw-1440px)/2+4rem))]">
             <div className="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
               {latestProjects.map((project: any) => (
                 <Link
