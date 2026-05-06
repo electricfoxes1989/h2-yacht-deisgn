@@ -671,4 +671,152 @@
   .scroll-hint {
     animation: scrollHint 2s ease-in-out infinite;
   }
+
+  /* ─────────────────────────────────────────────
+     Editorial design system — section numerals,
+     refined hovers, custom cursor pill
+     ───────────────────────────────────────────── */
+
+  /* Oversized chapter numeral as background watermark */
+  .chapter-numeral {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: clamp(8rem, 18vw, 22rem);
+    line-height: 0.85;
+    font-weight: 200;
+    letter-spacing: -0.05em;
+    color: var(--h2-cyan);
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* Section header with side-set numeral (alternative layout) */
+  .section-header-editorial {
+    position: relative;
+    padding-left: 4rem;
+  }
+  .section-header-editorial::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--h2-cyan);
+  }
+
+  /* Project card refined hover — image lifts subtly, accent line draws */
+  .editorial-card {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .editorial-card-image {
+    overflow: hidden;
+    position: relative;
+  }
+  .editorial-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(20, 35, 49, 0.15));
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .editorial-card:hover .editorial-card-image::after {
+    opacity: 1;
+  }
+  .editorial-card:hover img {
+    transform: scale(1.04);
+  }
+  .editorial-card img {
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Long horizontal line that "draws in" on hover */
+  .draw-line {
+    position: relative;
+    display: inline-block;
+  }
+  .draw-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .group:hover .draw-line::after,
+  .draw-line:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* Soft section transitions — slight gradient between dark/light blocks */
+  .section-fade-top {
+    position: relative;
+  }
+  .section-fade-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(20, 35, 49, 0.04), transparent);
+    pointer-events: none;
+  }
+
+  /* Editorial label — tiny number prefix */
+  .label-numbered {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.625rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--h2-cyan);
+  }
+  .label-numbered::before {
+    content: attr(data-num);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--h2-cyan);
+    opacity: 0.6;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Mobile refinements
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* Tighter mobile spacing */
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Make heading-serif punchier on mobile */
+  .heading-serif {
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  /* Container side padding bumped slightly */
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
 }

@@ -52,8 +52,12 @@ function ProjectGrid({
   const labelColor = dark ? { color: 'rgba(255,255,255,0.5)' } : undefined
 
   return (
-    <section className={`section-padding ${dark ? 'section-dark' : ''}`} style={style}>
-      <div className="container">
+    <section className={`section-padding relative overflow-hidden ${dark ? 'section-dark' : ''}`} style={style}>
+      {/* Oversized chapter numeral watermark */}
+      <span className="chapter-numeral heading-serif" aria-hidden="true">
+        {title.split(' ')[0]}
+      </span>
+      <div className="container relative">
         <ScrollReveal>
           <div className="flex items-end justify-between mb-12">
             <div>
@@ -74,9 +78,9 @@ function ProjectGrid({
             <motion.div key={project._id} variants={staggerItem}>
               <Link
                 href={`/projects/${project.slug.current}`}
-                className="group block"
+                className="group block editorial-card"
               >
-                <div className={`img-zoom overflow-hidden ${cardBg} rounded-2xl aspect-[16/9]`}>
+                <div className={`editorial-card-image ${cardBg} rounded-2xl aspect-[16/9]`}>
                   <ProjectImage
                     mainImage={project.mainImage}
                     imageNote={project.imageNote}
@@ -88,7 +92,7 @@ function ProjectGrid({
                 <div className="project-card-text mt-5">
                   <div className="accent-line mb-4" />
                   <h3 className={`text-lg font-semibold tracking-[-0.02em] ${textColor} ${hoverColor} transition-colors duration-300`}>
-                    {project.title}
+                    <span className="draw-line">{project.title}</span>
                   </h3>
                   {project.shipyard && (
                     <p className={`text-sm ${subtitleColor} mt-1`}>{project.shipyard}</p>

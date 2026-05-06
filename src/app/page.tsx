@@ -1,5 +1,6 @@
 import { getFeaturedProjects, getAllProjects, getLatestNews, getLatestProjects, getAllPressArticles } from '@/lib/sanity'
 import HeroSection from '@/components/home/HeroSection'
+import MarqueeStrip from '@/components/home/MarqueeStrip'
 import ProjectsByCategory from '@/components/home/ProjectsByCategory'
 import ConceptsCarousel from '@/components/home/ConceptsCarousel'
 import StatsSection from '@/components/home/StatsSection'
@@ -51,6 +52,7 @@ export default async function Home() {
     <div className="min-h-screen bg-white">
       <JsonLd data={[servicesSchema, faqSchema(HOME_FAQ)]} />
       <HeroSection featuredProjects={featuredProjects} />
+      <MarqueeStrip projects={allProjects} />
       <ProjectsByCategory
         projects={allProjects}
         latestNews={latestNews}
