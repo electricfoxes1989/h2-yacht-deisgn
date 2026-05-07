@@ -47,7 +47,7 @@ export default function ConceptsCarousel({ projects }: ConceptsCarouselProps) {
         <ScrollReveal>
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="label-text mb-3">Design Exploration</p>
+              <p className="eyebrow mb-4">Design Exploration</p>
               <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">
                 Concepts
               </h2>

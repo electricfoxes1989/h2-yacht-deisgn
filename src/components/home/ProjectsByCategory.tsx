@@ -201,9 +201,9 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
         <section className="section-padding bg-white overflow-hidden">
           <div className="container">
             <ScrollReveal>
-              <div className="flex items-end justify-between mb-10">
+              <div className="flex items-end justify-between mb-12">
                 <div>
-                  <p className="label-text mb-3">Latest</p>
+                  <p className="eyebrow mb-4">Just Delivered</p>
                   <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">Latest Projects</h2>
                 </div>
                 <Link
@@ -298,9 +298,9 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
             <ScrollReveal>
               <div className="flex items-end justify-between mb-12">
                 <div>
-                  <p className="eyebrow mb-4">Press &amp; Media</p>
+                  <p className="eyebrow mb-4">As Seen In</p>
                   <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-navy">
-                    In the Press
+                    Featured Coverage
                   </h2>
                 </div>
                 <Link
@@ -507,11 +507,13 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
       <section className="section-padding bg-h2-light">
         <div className="container">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <p className="label-text mb-4">Our Studios</p>
-              <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-dark">
-                London &amp; Nice
-              </h2>
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="eyebrow mb-4">Two Studios</p>
+                <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-dark">
+                  London &amp; Nice
+                </h2>
+              </div>
             </div>
           </ScrollReveal>
 
@@ -626,8 +628,8 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
             <ScrollReveal>
               <div className="flex items-end justify-between mb-12">
                 <div>
-                  <p className="label-text mb-3">Press &amp; Features</p>
-                  <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">Latest News</h2>
+                  <p className="eyebrow mb-4">Studio Journal</p>
+                  <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl">News &amp; Updates</h2>
                 </div>
                 <Link
                   href="/news"

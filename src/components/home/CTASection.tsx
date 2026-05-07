@@ -10,6 +10,9 @@ export default function CTASection() {
       <div className="container">
         <ScrollReveal direction="up">
           <div className="max-w-3xl mx-auto text-center">
+            <p className="eyebrow mb-6 justify-center" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Start a Project
+            </p>
             <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl mb-5">Begin Your Journey</h2>
             <p className="text-lg leading-relaxed mb-10 max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.65)' }}>
               Whether you&rsquo;re planning a new build, a comprehensive refit,
@@ -17,7 +20,7 @@ export default function CTASection() {
               life.
             </p>
             <Link href="/contact" className="btn-outline-light">
-              Get in Touch
+              Contact the Studio
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

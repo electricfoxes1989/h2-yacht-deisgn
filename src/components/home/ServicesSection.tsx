@@ -29,9 +29,9 @@ export default function ServicesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           <ScrollReveal direction="left">
             <div>
-              <p className="label-text mb-4">What We Do</p>
+              <p className="eyebrow mb-4">Disciplines</p>
               <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl mb-6">
-                Our Services
+                What We Design
               </h2>
               <p className="text-h2-body leading-relaxed max-w-lg">
                 From first sketch to final delivery, H2 provides a complete
