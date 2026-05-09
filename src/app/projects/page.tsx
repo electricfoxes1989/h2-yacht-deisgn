@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
           <p className="label-text mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Portfolio
           </p>
-          <h1 className="heading-serif text-5xl md:text-6xl lg:text-7xl mb-6">
+          <h1 className="heading-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6">
             Our Portfolio
           </h1>
           <p className="text-lg leading-relaxed max-w-2xl" style={{ color: 'rgba(255,255,255,0.7)' }}>

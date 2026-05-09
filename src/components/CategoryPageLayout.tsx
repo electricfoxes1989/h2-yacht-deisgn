@@ -34,7 +34,7 @@ export default function CategoryPageLayout({
             </p>
           </HeroTextReveal>
           <HeroTextReveal delay={0.25}>
-            <h1 className="heading-serif text-5xl md:text-6xl lg:text-7xl mb-6">
+            <h1 className="heading-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6">
               {title}
             </h1>
           </HeroTextReveal>

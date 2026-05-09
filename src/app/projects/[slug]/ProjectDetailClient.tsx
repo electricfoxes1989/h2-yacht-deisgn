@@ -100,7 +100,7 @@ export default function ProjectDetailClient({
                 </span>
               </HeroTextReveal>
               <HeroTextReveal delay={0.35}>
-                <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-4">
+                <h1 className="heading-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white mb-4 break-words">
                   {project.title}
                 </h1>
               </HeroTextReveal>

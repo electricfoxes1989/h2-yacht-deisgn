@@ -224,7 +224,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                 <Link
                   key={project._id}
                   href={`/projects/${project.slug.current}`}
-                  className="group shrink-0 w-[320px] md:w-[380px] snap-start"
+                  className="group shrink-0 w-[260px] sm:w-[300px] md:w-[380px] snap-start"
                 >
                   <div className="img-zoom overflow-hidden bg-h2-light rounded-2xl flex items-center justify-center" style={{ minHeight: '240px', maxHeight: '360px' }}>
                     <ProjectImage

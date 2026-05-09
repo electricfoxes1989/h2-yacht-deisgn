@@ -47,7 +47,7 @@ export default function About() {
             </span>
           </HeroTextReveal>
           <HeroTextReveal delay={0.25}>
-            <h1 className="heading-serif text-5xl md:text-6xl lg:text-7xl mb-8 max-w-4xl">
+            <h1 className="heading-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 max-w-4xl">
               About H2 Yacht Design
             </h1>
           </HeroTextReveal>

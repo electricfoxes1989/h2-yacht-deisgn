@@ -198,7 +198,7 @@ export default function HeroSlideshow({ slides }: HeroSlideshowProps) {
               key={currentSlide._id}
               className="max-w-3xl animate-slide-in"
             >
-              <h1 className="heading-serif text-4xl md:text-6xl lg:text-7xl text-white mb-3">
+              <h1 className="heading-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white mb-3 break-words">
                 {currentSlide.title}
               </h1>
               {currentSlide.shipyard && (
