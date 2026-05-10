@@ -37,15 +37,18 @@ export default function ProjectDetailClient({
 
   // Build specs list
   const specItems: { label: string; value: string }[] = []
-  if (project.length) specItems.push({ label: 'Length', value: project.length })
-  if (specs.loa) specItems.push({ label: 'LOA', value: specs.loa })
+  // Prefer specs.loa over project.length to avoid duplication; only show
+  // project.length if there's no LOA in the specs object.
+  if (specs.loa) specItems.push({ label: 'Length', value: specs.loa })
+  else if (project.length) specItems.push({ label: 'Length', value: project.length })
   if (specs.beam) specItems.push({ label: 'Beam', value: specs.beam })
   if (specs.draft) specItems.push({ label: 'Draft', value: specs.draft })
   if (specs.displacement) specItems.push({ label: 'Displacement', value: specs.displacement })
-  if (specs.speed) specItems.push({ label: 'Max Speed', value: specs.speed })
+  if (specs.maxSpeed || specs.speed) specItems.push({ label: 'Max Speed', value: specs.maxSpeed || specs.speed })
   if (specs.range) specItems.push({ label: 'Range', value: specs.range })
   if (specs.guests) specItems.push({ label: 'Guests', value: specs.guests })
   if (specs.crew) specItems.push({ label: 'Crew', value: specs.crew })
+  if (specs.grossTonnage) specItems.push({ label: 'Gross Tonnage', value: specs.grossTonnage })
 
   return (
     <div className="min-h-screen bg-white">
