@@ -96,31 +96,37 @@ export default function Footer() {
 
             <a
               href="mailto:info@h2yachtdesign.com"
-              className="group inline-flex items-center gap-3 text-white/80 hover:text-white transition-colors duration-300"
+              className="group inline-flex items-center gap-3 text-white/80 hover:text-[var(--h2-cyan)] transition-colors duration-300"
             >
               <span className="text-xl md:text-2xl lg:text-3xl tracking-[-0.03em] font-light">
                 info@h2yachtdesign.com
               </span>
-              <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+              <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[var(--h2-cyan)]" />
             </a>
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-white/10 mb-16" />
+          {/* Divider with center cyan diamond accent */}
+          <div className="flex items-center gap-3 mb-16">
+            <div className="flex-1 h-px bg-white/10" />
+            <span
+              className="w-1.5 h-1.5 rotate-45 flex-shrink-0"
+              style={{ backgroundColor: 'var(--h2-cyan)' }}
+            />
+            <div className="flex-1 h-px bg-white/10" />
+          </div>
 
           {/* Navigation + offices grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-8">
             {/* Studio */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                Studio
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                Studio</h4>
               <ul className="space-y-3">
                 {footerNav.studio.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm text-white/55 hover:text-white transition-colors duration-300"
+                      className="text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                     >
                       {item.label}
                     </Link>
@@ -131,15 +137,14 @@ export default function Footer() {
 
             {/* Work */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                Work
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                Work</h4>
               <ul className="space-y-3">
                 {footerNav.work.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm text-white/55 hover:text-white transition-colors duration-300"
+                      className="text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                     >
                       {item.label}
                     </Link>
@@ -150,9 +155,8 @@ export default function Footer() {
 
             {/* Connect */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                Connect
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                Connect</h4>
               <ul className="space-y-3">
                 {footerNav.connect.map((item) => (
                   <li key={item.label}>
@@ -161,7 +165,7 @@ export default function Footer() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm text-white/55 hover:text-white transition-colors duration-300"
+                        className="inline-flex items-center gap-1.5 text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                       >
                         {item.label}
                         <ArrowUpRight className="h-3 w-3" />
@@ -169,7 +173,7 @@ export default function Footer() {
                     ) : (
                       <Link
                         href={item.href}
-                        className="text-sm text-white/55 hover:text-white transition-colors duration-300"
+                        className="text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                       >
                         {item.label}
                       </Link>
@@ -181,9 +185,8 @@ export default function Footer() {
 
             {/* London */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                London
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                London</h4>
               <address className="not-italic text-sm leading-relaxed space-y-0.5 text-white/55">
                 <p>8 Princeton Court</p>
                 <p>53/55 Felsham Road</p>
@@ -192,7 +195,7 @@ export default function Footer() {
               <p className="mt-3">
                 <a
                   href="tel:+442087885008"
-                  className="text-sm text-white/55 hover:text-white transition-colors duration-300"
+                  className="text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                 >
                   +44 (0)208 788 5008
                 </a>
@@ -201,9 +204,8 @@ export default function Footer() {
 
             {/* Nice */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                Nice
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                Nice</h4>
               <address className="not-italic text-sm leading-relaxed space-y-0.5 text-white/55">
                 <p>4 Palais Jolienne</p>
                 <p>43 Blvd Gambetta</p>
@@ -212,7 +214,7 @@ export default function Footer() {
               <p className="mt-3">
                 <a
                   href="tel:+33422328906"
-                  className="text-sm text-white/55 hover:text-white transition-colors duration-300"
+                  className="text-sm text-white/55 hover:text-[var(--h2-cyan)] transition-colors duration-300"
                 >
                   +33 422 328 906
                 </a>
@@ -221,9 +223,8 @@ export default function Footer() {
 
             {/* Social */}
             <div>
-              <h4 className="label-text mb-5 text-white/35 tracking-[0.15em]">
-                Follow
-              </h4>
+              <h4 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] mb-5 flex items-center gap-2" style={{ color: "var(--h2-cyan)" }}><span className="block w-4 h-px" style={{ backgroundColor: "var(--h2-cyan)" }} />
+                Follow</h4>
               <div className="flex items-center gap-3">
                 {socialLinks.map((social) => (
                   <a
@@ -232,7 +233,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/45 hover:text-white hover:border-white/50 transition-all duration-300"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/45 hover:text-[var(--h2-cyan)] hover:border-[var(--h2-cyan)] transition-all duration-300"
                   >
                     <social.icon className="h-4 w-4" />
                   </a>
