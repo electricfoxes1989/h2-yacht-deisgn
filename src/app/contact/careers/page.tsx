@@ -53,13 +53,15 @@ export default function Careers() {
       <section className="section-dark pt-40 pb-24">
         <div className="container">
           <div className="max-w-3xl">
-            <p className="label-text mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            <p className="eyebrow mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
               Join Our Team
             </p>
-            <h1 className="heading-serif mb-8">Careers at H2</h1>
+            <h1 className="heading-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 break-words">
+              Careers at H2
+            </h1>
             <p className="text-lg leading-relaxed" style={{ maxWidth: '640px' }}>
               A close-knit team of multi-disciplinary interior and exterior yacht
-              designers, producing some of the world's most spectacular yachts and
+              designers, producing some of the world&rsquo;s most spectacular yachts and
               residential properties.
             </p>
           </div>

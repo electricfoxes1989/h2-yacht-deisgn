@@ -134,7 +134,7 @@ export default async function NewsPage() {
 
                 const card = (
                   <div className="group">
-                    <div className="img-zoom aspect-[4/3] bg-h2-light mb-5">
+                    <div className="img-zoom aspect-[16/9] bg-h2-light mb-5">
                       {article.mainImage && (
                         <img
                           src={urlFor(article.mainImage).width(800).height(600).quality(85).url()}

@@ -432,7 +432,7 @@ export default function ProjectDetailClient({
                     className="group block h-full"
                   >
                     {/* Hero image */}
-                    <div className="img-zoom relative aspect-[16/10] overflow-hidden rounded-xl bg-h2-light mb-4">
+                    <div className="img-zoom relative aspect-[16/9] overflow-hidden rounded-xl bg-h2-light mb-4">
                       {article.imageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img

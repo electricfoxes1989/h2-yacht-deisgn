@@ -226,7 +226,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                   href={`/projects/${project.slug.current}`}
                   className="group shrink-0 w-[260px] sm:w-[300px] md:w-[380px] snap-start"
                 >
-                  <div className="img-zoom overflow-hidden bg-h2-light rounded-2xl flex items-center justify-center" style={{ minHeight: '240px', maxHeight: '360px' }}>
+                  <div className="img-zoom overflow-hidden bg-h2-light rounded-2xl aspect-[16/9]">
                     <ProjectImage
                       mainImage={project.mainImage}
                       imageNote={project.imageNote}
@@ -234,7 +234,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                       title={project.title}
                       category={project.category}
                       width={760}
-                      fit="contain"
+                      height={428}
                     />
                   </div>
                   <div className="mt-4">
@@ -325,7 +325,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                     rel="noopener noreferrer"
                     className="group block h-full"
                   >
-                    <div className="img-zoom relative aspect-[16/10] overflow-hidden rounded-xl bg-white mb-4">
+                    <div className="img-zoom relative aspect-[16/9] overflow-hidden rounded-xl bg-white mb-4">
                       {article.imageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -435,15 +435,15 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                     href={`/projects/${project.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom overflow-hidden bg-white/5 rounded-xl aspect-[4/5]">
+                    <div className="img-zoom overflow-hidden bg-white/5 rounded-xl aspect-[16/9]">
                       <ProjectImage
                         mainImage={project.mainImage}
                         imageNote={project.imageNote}
                         isConfidential={project.isConfidential}
                         title={project.title}
                         category={project.category}
-                        width={520}
-                        height={650}
+                        width={900}
+                        height={506}
                       />
                     </div>
                     <div className="mt-4">
@@ -648,7 +648,7 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                     href={`/news/${article.slug.current}`}
                     className="group block"
                   >
-                    <div className="img-zoom aspect-[4/3] overflow-hidden mb-4 bg-muted rounded-xl">
+                    <div className="img-zoom aspect-[16/9] overflow-hidden mb-4 bg-muted rounded-xl">
                       {article.mainImage && (
                         <img
                           src={urlFor(article.mainImage)
