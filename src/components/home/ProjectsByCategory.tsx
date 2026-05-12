@@ -522,8 +522,8 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
               <div>
                 <div className="overflow-hidden rounded-2xl mb-8 bg-muted">
                   <img
-                    src="/images/h2-studio.jpg"
-                    alt="H2 Yacht Design London Studio"
+                    src="/images/h2-studio-london.avif"
+                    alt="Jonny Horsfield at H2 Yacht Design's London studio"
                     className="w-full h-auto block"
                   />
                 </div>
