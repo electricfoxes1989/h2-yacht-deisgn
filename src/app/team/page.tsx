@@ -4,6 +4,7 @@ import { getTeamMembers, urlFor } from '@/lib/sanity'
 import { ArrowRight } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbSchema, personSchema } from '@/lib/structured-data'
+import TeamSlideshow from '@/components/TeamSlideshow'
 
 export const revalidate = 60
 
@@ -102,21 +103,34 @@ export default async function TeamPage() {
                 </p>
               </div>
 
-              {/* Feature image — Jonny on site */}
-              <figure className="mb-20">
-                <div className="img-zoom overflow-hidden rounded-2xl aspect-[16/9] bg-h2-light">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/jonny-shipyard.jpg"
-                    alt="Jonny Horsfield on site, supervising construction at the shipyard"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <figcaption className="mt-4 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.2em] text-h2-muted">
-                  <span className="block w-6 h-px" style={{ backgroundColor: 'var(--h2-cyan)' }} />
-                  Jonny Horsfield &mdash; On site supervising construction
-                </figcaption>
-              </figure>
+              {/* Team slideshow */}
+              <div className="mb-20">
+                <TeamSlideshow
+                  slides={[
+                    {
+                      src: '/images/jonny-shipyard.jpg',
+                      caption: 'Jonny Horsfield — On site supervising construction',
+                    },
+                    {
+                      src: '/images/h2-studio-london.avif',
+                      caption: 'The London studio — daily collaboration in practice',
+                    },
+                    {
+                      src: '/images/team-fabric-samples.jpg',
+                      caption: 'In the materials library — bespoke selection in the studio',
+                    },
+                    {
+                      src: '/images/jonny-monaco.jpg',
+                      caption: 'Jonny Horsfield — Monaco Yacht Show 2025',
+                    },
+                    {
+                      src: '/images/h2-25-anniversary.jpg',
+                      caption: 'H25 — celebrating 25 years of H2 Yacht Design (1994–2019)',
+                    },
+                  ]}
+                  autoAdvance={6000}
+                />
+              </div>
 
               {/* Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--h2-border,#e5e5e5)]">
