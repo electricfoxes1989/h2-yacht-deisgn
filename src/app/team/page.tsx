@@ -91,7 +91,7 @@ export default async function TeamPage() {
             /* Fallback when no team data in Sanity */
             <div className="max-w-4xl mx-auto">
               {/* Team description */}
-              <div className="text-center mb-20">
+              <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-[var(--h2-dark)] mb-8">
                   A Multi-Disciplinary Studio
                 </h2>
@@ -101,6 +101,22 @@ export default async function TeamPage() {
                   collaborative, dynamic environment to turn visionary concepts into reality.
                 </p>
               </div>
+
+              {/* Feature image — Jonny on site */}
+              <figure className="mb-20">
+                <div className="img-zoom overflow-hidden rounded-2xl aspect-[16/9] bg-h2-light">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/jonny-shipyard.jpg"
+                    alt="Jonny Horsfield on site, supervising construction at the shipyard"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <figcaption className="mt-4 flex items-center gap-3 text-[0.7rem] uppercase tracking-[0.2em] text-h2-muted">
+                  <span className="block w-6 h-px" style={{ backgroundColor: 'var(--h2-cyan)' }} />
+                  Jonny Horsfield &mdash; On site supervising construction
+                </figcaption>
+              </figure>
 
               {/* Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--h2-border,#e5e5e5)]">
