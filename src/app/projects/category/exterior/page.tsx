@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getProjectsByCategory } from '@/lib/sanity'
+import { getProjectsByDesignScope } from '@/lib/sanity'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const revalidate = 60
@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ExteriorDesignPage() {
-  const projects = await getProjectsByCategory('new-build')
+  const projects = await getProjectsByDesignScope('exterior')
 
   return (
     <>
       <CategoryPageLayout
         projects={projects}
         title="Exterior Design"
-        subtitle="New Build"
+        subtitle="Discipline"
         description="From initial concept to final delivery, H2 designs bespoke superyacht exteriors that balance bold aesthetics with technical precision."
       />
     </>

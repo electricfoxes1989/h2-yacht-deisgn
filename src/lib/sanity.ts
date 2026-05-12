@@ -81,6 +81,29 @@ export async function getProjectBySlug(slug: string) {
   )
 }
 
+/**
+ * Filter projects by design scope ("exterior" or "interior").
+ * Used by the Exterior Design / Interior Design service pages.
+ */
+export async function getProjectsByDesignScope(scope: 'exterior' | 'interior') {
+  return await client.fetch(
+    `*[_type == "project" && $scope in designScope && !(hidden == true)] | order(defined(year) desc, year desc, title asc) {
+      _id,
+      title,
+      slug,
+      shipyard,
+      category,
+      year,
+      length,
+      excerpt,
+      mainImage,
+      imageNote,
+      isConfidential
+    }`,
+    { scope }
+  )
+}
+
 export async function getProjectsByCategory(category: string) {
   return await client.fetch(
     `*[_type == "project" && category == $category && !(hidden == true)] | order(defined(year) desc, year desc, title asc) {
