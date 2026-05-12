@@ -89,7 +89,6 @@ export default function ProjectsGrid({ projects }: { projects: any[] }) {
 
                   {/* Info below image */}
                   <div className="project-card-text mt-5">
-                    <div className="accent-line mb-4" />
                     <h3 className="text-lg font-semibold tracking-[-0.02em] text-h2-navy group-hover:text-[var(--h2-cyan)] transition-colors duration-300">
                       {project.title}
                     </h3>

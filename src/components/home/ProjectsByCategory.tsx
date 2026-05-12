@@ -90,9 +90,8 @@ function ProjectGrid({
                   />
                 </div>
                 <div className="project-card-text mt-5">
-                  <div className="accent-line mb-4" />
                   <h3 className={`text-lg font-semibold tracking-[-0.02em] ${textColor} ${hoverColor} transition-colors duration-300`}>
-                    <span className="draw-line">{project.title}</span>
+                    {project.title}
                   </h3>
                   {project.shipyard && (
                     <p className={`text-sm ${subtitleColor} mt-1`}>{project.shipyard}</p>
