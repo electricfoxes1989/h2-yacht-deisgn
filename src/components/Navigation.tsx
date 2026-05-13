@@ -109,7 +109,7 @@ export default function Navigation() {
             : 'bg-transparent pt-6 sm:pt-8 pb-4'
         }`}
       >
-        <div className="px-6 sm:px-10 lg:px-16 xl:px-20 max-w-[1600px] mx-auto">
+        <div className="container">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link

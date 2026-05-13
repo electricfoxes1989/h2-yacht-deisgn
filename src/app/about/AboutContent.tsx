@@ -260,9 +260,12 @@ export default function About({ featuredNews = [] }: AboutContentProps) {
 
             <ScrollReveal delay={0.3}>
               <div className="mt-10 flex items-center gap-4">
-                <div className="h-px w-12 bg-[var(--h2-gold)]" />
-                <span className="text-sm font-medium tracking-wide text-h2-dark">
-                  Jonny Horsfield, Founder
+                <div className="h-px w-12 bg-[var(--h2-cyan)]" />
+                <span
+                  className="text-sm md:text-base text-h2-body"
+                  style={{ fontStyle: 'italic' }}
+                >
+                  Jonny Horsfield, Owner &amp; Creative Director
                 </span>
               </div>
             </ScrollReveal>

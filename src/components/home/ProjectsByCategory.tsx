@@ -483,29 +483,51 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
         </section>
       )}
 
-      {/* Quote Section */}
-      <section className="section-padding bg-h2-cream relative overflow-hidden">
-        <ParallaxSection speed={0.1}>
-          <div className="container">
+      {/* Quote Section — dark navy, full-bleed editorial */}
+      <section
+        className="relative overflow-hidden py-28 md:py-40"
+        style={{ backgroundColor: 'var(--h2-navy)' }}
+      >
+        {/* Subtle cyan glow accent */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(19,167,227,0.10) 0%, transparent 65%)',
+          }}
+        />
+        <ParallaxSection speed={0.08}>
+          <div className="container relative">
             <ScrollReveal direction="none">
               <div className="max-w-4xl mx-auto text-center">
-                <span
-                  className="font-serif block text-[8rem] md:text-[10rem] leading-none select-none"
-                  style={{ color: 'rgba(19, 167, 227, 0.15)' }}
-                  aria-hidden="true"
+                {/* Eyebrow */}
+                <p
+                  className="eyebrow mb-10"
+                  style={{ color: 'var(--h2-cyan)' }}
                 >
-                  &ldquo;
-                </span>
-                <blockquote className="heading-serif text-3xl md:text-4xl lg:text-5xl -mt-16 md:-mt-20 mb-10">
-                  H2 pride ourselves in not having a &lsquo;house style&rsquo;
+                  In the Words of the Founder
+                </p>
+
+                <blockquote className="heading-serif text-3xl md:text-5xl lg:text-6xl text-white text-center leading-[1.1] mb-12">
+                  &ldquo;We pride ourselves in not having a house style.&rdquo;
                 </blockquote>
-                <div>
-                  <p className="text-sm font-medium tracking-wide uppercase text-h2-dark">
-                    Jonny Horsfield
+
+                {/* Italic attribution — Orchid-style */}
+                <div className="flex items-center justify-center gap-4">
+                  <span
+                    className="block w-12 h-px"
+                    style={{ backgroundColor: 'var(--h2-cyan)' }}
+                  />
+                  <p
+                    className="text-sm md:text-base text-white/80"
+                    style={{ fontStyle: 'italic' }}
+                  >
+                    Jonny Horsfield, Owner &amp; Creative Director
                   </p>
-                  <p className="text-sm text-h2-muted mt-1">
-                    Owner &amp; Creative Director
-                  </p>
+                  <span
+                    className="block w-12 h-px"
+                    style={{ backgroundColor: 'var(--h2-cyan)' }}
+                  />
                 </div>
               </div>
             </ScrollReveal>
