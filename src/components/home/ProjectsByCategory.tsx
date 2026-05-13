@@ -216,10 +216,17 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
             </ScrollReveal>
           </div>
 
-          {/* Same horizontal padding as .container so cards line up with title */}
-          <div className="pl-6 sm:pl-10 lg:pl-[max(4rem,calc((100vw-1440px)/2+4rem))]">
-            <div className="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-              {latestProjects.map((project: any) => (
+          {/* Horizontal scroll row — first card aligns with .container left edge */}
+          <div
+            className="flex gap-5 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide"
+            style={{ scrollbarWidth: 'none', scrollPaddingLeft: 'var(--container-pl, 1.5rem)' }}
+          >
+            {/* Left spacer — same width as .container left padding so the first card aligns with the section title */}
+            <div
+              aria-hidden="true"
+              className="shrink-0 w-6 sm:w-10 lg:w-[max(4rem,calc((100vw-1440px)/2+4rem))]"
+            />
+            {latestProjects.map((project: any) => (
                 <Link
                   key={project._id}
                   href={`/projects/${project.slug.current}`}
@@ -257,7 +264,11 @@ export default function ProjectsByCategory({ projects, latestNews, latestProject
                   </div>
                 </Link>
               ))}
-            </div>
+            {/* Right spacer — same width so last card has breathing room */}
+            <div
+              aria-hidden="true"
+              className="shrink-0 w-6 sm:w-10 lg:w-16"
+            />
           </div>
         </section>
       )}
