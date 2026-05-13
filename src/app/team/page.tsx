@@ -49,11 +49,9 @@ export default async function TeamPage() {
             The Team
           </h1>
           <p className="text-lg text-white/70 max-w-3xl leading-relaxed">
-            Since our founding, H2 Yacht Design has grown into one of the most innovative and
-            technically skilled teams in the yacht design industry. Our passionate and dedicated
-            designers bring over 30 years of expertise, continuously pushing creative boundaries
-            to produce some of the world&rsquo;s most spectacular superyachts, private jets, and luxury
-            residences.
+            A close-knit team of designers, visualisers and architects working side by side across
+            London and Nice. We share the studio, the materials room, and a love for the craft &mdash;
+            and it shows in every yacht we deliver.
           </p>
         </div>
       </section>
@@ -94,12 +92,12 @@ export default async function TeamPage() {
               {/* Team description */}
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-[var(--h2-dark)] mb-8">
-                  A Multi-Disciplinary Studio
+                  How the studio works
                 </h2>
                 <p className="text-base md:text-lg text-[var(--h2-body)] leading-relaxed max-w-3xl mx-auto">
-                  Comprising a multi-disciplinary team, we bring together exterior stylists,
-                  interior architects, 3D visualizers, and FF&amp;E designers — all working in a
-                  collaborative, dynamic environment to turn visionary concepts into reality.
+                  Exterior stylists, interior architects, 3D visualisers and FF&amp;E designers, sharing
+                  the same open-plan floor. Briefs move quickly between disciplines, which is why the
+                  yachts arrive on the water as one coherent piece of design.
                 </p>
               </div>
 

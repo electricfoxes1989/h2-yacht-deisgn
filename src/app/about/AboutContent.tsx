@@ -57,7 +57,7 @@ export default function About({ featuredNews = [] }: AboutContentProps) {
           </HeroTextReveal>
           <HeroTextReveal delay={0.4}>
             <p className="text-lg md:text-xl max-w-2xl leading-relaxed text-white/70">
-              Established in London over 30 years ago
+              Interior and exterior design for the world&rsquo;s most distinguished superyachts &mdash; from studios in London and Nice.
             </p>
           </HeroTextReveal>
         </div>
@@ -93,12 +93,10 @@ export default function About({ featuredNews = [] }: AboutContentProps) {
                   being approached for new-build interior and exterior commissions alike.
                 </p>
                 <p>
-                  Established in 1994, we are a leading superyacht design studio with two prime
-                  locations: London, near the world's top fabric and furniture houses, and Nice, South
-                  of France, just steps from the yachts themselves. Our studios are designed to inspire
-                  creativity, featuring open-plan, light-filled workspaces. Our extensive fabric rooms
-                  house thousands of samples, enabling us to craft cohesive and imaginative colour
-                  boards.
+                  Today the studio operates from two prime locations: London, near the world&rsquo;s top
+                  fabric and furniture houses, and Nice, South of France, just steps from the yachts
+                  themselves. Open-plan, light-filled workspaces house extensive fabric rooms with
+                  thousands of samples, enabling cohesive and imaginative colour boards for every project.
                 </p>
               </div>
             </ScrollReveal>
@@ -413,16 +411,13 @@ export default function About({ featuredNews = [] }: AboutContentProps) {
             <ScrollReveal delay={0.15}>
               <div className="space-y-6 text-base leading-[1.8] text-h2-body max-w-3xl">
                 <p>
-                  Since our founding, H2 Yacht Design has grown into one of the most innovative and
-                  technically skilled teams in the yacht design industry. Our passionate and dedicated
-                  designers bring over 30 years of expertise, continuously pushing creative boundaries
-                  to produce some of the world's most spectacular superyachts, private jets, and luxury
-                  residences.
+                  Behind every project sits a tight, collaborative team: exterior stylists, interior
+                  architects, 3D visualizers and FF&amp;E designers, working side by side to turn
+                  visionary briefs into delivered yachts and residences.
                 </p>
                 <p>
-                  Comprising a multi-disciplinary team, we bring together exterior stylists, interior
-                  architects, 3D visualizers, and FF&E designers -- all working in a collaborative,
-                  dynamic environment to turn visionary concepts into reality.
+                  Each discipline pushes the others. The result is design with the technical conviction
+                  to be built &mdash; and the imagination to be remembered.
                 </p>
               </div>
             </ScrollReveal>

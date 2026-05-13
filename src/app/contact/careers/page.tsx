@@ -60,9 +60,8 @@ export default function Careers() {
               Careers at H2
             </h1>
             <p className="text-lg leading-relaxed" style={{ maxWidth: '640px' }}>
-              A close-knit team of multi-disciplinary interior and exterior yacht
-              designers, producing some of the world&rsquo;s most spectacular yachts and
-              residential properties.
+              Looking for designers, visualisers and architects who want to shape
+              the world&rsquo;s most distinguished superyachts and residences.
             </p>
           </div>
         </div>
