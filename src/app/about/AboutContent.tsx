@@ -158,9 +158,9 @@ export default function About({ featuredNews = [] }: AboutContentProps) {
             <ScrollReveal>
               <div className="flex items-end justify-between mb-12">
                 <div>
-                  <p className="eyebrow mb-4">In the Press</p>
+                  <p className="eyebrow mb-4">Milestones &amp; Insight</p>
                   <h2 className="heading-serif text-3xl md:text-4xl lg:text-5xl text-h2-navy">
-                    Featured Articles
+                    From the Archive
                   </h2>
                 </div>
                 <Link

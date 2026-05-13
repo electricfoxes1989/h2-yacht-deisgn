@@ -108,12 +108,16 @@ export default async function TeamPage() {
                 <TeamSlideshow
                   slides={[
                     {
+                      src: '/images/h2-studio-london-wide.jpg',
+                      caption: 'Inside the London studio — open-plan creative floor',
+                    },
+                    {
                       src: '/images/jonny-shipyard.jpg',
                       caption: 'Jonny Horsfield — On site supervising construction',
                     },
                     {
                       src: '/images/h2-studio-london.avif',
-                      caption: 'The London studio — daily collaboration in practice',
+                      caption: 'Daily collaboration in practice',
                     },
                     {
                       src: '/images/team-fabric-samples.jpg',
