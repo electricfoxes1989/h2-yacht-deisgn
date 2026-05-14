@@ -47,8 +47,8 @@ export default function ServicesSection() {
             <figure className="img-zoom relative aspect-[16/9] overflow-hidden rounded-2xl bg-h2-light">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/team-fabric-samples.jpg"
-                alt="H2 Yacht Design materials selection — fabric and leather samples on the studio table"
+                src="/images/h2-materials-library.jpg"
+                alt="H2 Yacht Design materials library — fabric and leather samples in the London studio"
                 className="w-full h-full object-cover"
               />
             </figure>
